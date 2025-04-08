@@ -43,7 +43,8 @@ class WristletResource(Resource):
 class FlowerResource(Resource):
     
     def get(self):
-        pass
+        flower_dicts = [flower.to_dict() for flower in Flower.query.all()]
+        return flower_dicts , 200
 
     def post(self):
         pass
