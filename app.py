@@ -77,10 +77,19 @@ class RibbonResource(Resource):
 class AccentResource(Resource):
 
     def get(self):
-        pass
+        accent_dicts = [accent.to_dict() for accent in Accent.query.all()]
+        return accent_dicts , 200
 
     def post(self):
-        pass
+        json = request.get_json()
+        try:
+            new_accent = Accent(color=json['color'])
+            db.session.add(new_accent)
+            db.session.commit()
+
+            return new_accent.to_dict() , 201
+        except:
+            return {"errors":["validation errors"]} , 400
 
 api.add_resource(Home, '/api')
 api.add_resource(WristletResource, '/api/wristlets')
