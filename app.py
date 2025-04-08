@@ -60,10 +60,19 @@ class FlowerResource(Resource):
 class RibbonResource(Resource):
 
     def get(self):
-        pass
+        ribbon_dicts = [ribbon.to_dict() for ribbon in Ribbon.query.all()]
+        return ribbon_dicts , 200
 
     def post(self):
-        pass
+        json = request.get_json()
+        try:
+            new_ribbon = Ribbon(color=json['color'])
+            db.session.add(new_ribbon)
+            db.session.commit()
+
+            return new_ribbon.to_dict() , 201
+        except:
+            return {"errors":["validation errors"]} , 400
 
 class AccentResource(Resource):
 
