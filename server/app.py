@@ -47,7 +47,15 @@ class FlowerResource(Resource):
         return flower_dicts , 200
 
     def post(self):
-        pass
+        json = request.get_json()
+        try:
+            new_flower = Flower(name=json['name'], color=json['color'])
+            db.session.add(new_flower)
+            db.session.commit()
+
+            return new_flower.to_dict() , 201
+        except:
+            return {"errors":["validation errors"]} , 400
 
 class RibbonResource(Resource):
 
