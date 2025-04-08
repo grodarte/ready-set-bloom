@@ -31,6 +31,12 @@ class Flower(db.Model, SerializerMixin):
             raise ValueError("Name must be provided.")
         return name
 
+    @validates('color')
+    def validate_color(self, key, color):
+        if not color:
+            raise ValueError("Color must be provided.")
+        return color
+
 class Ribbon(db.Model, SerializerMixin):
     __tablename__ = "ribbons"
 
