@@ -9,7 +9,7 @@ from flask_restful import Resource
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Wristlet, Flower, Ribbon, Accent
+from models import Wristlet, Flower, Ribbon, Accent, Event
 
 # Views go here!
 
