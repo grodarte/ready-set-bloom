@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import NavBar from "./NavBar";
 import { WristletProvider } from "../context/wristlet";
 import { FlowerProvider } from "../context/flower";
 import { RibbonProvider } from "../context/ribbon";
@@ -9,10 +10,9 @@ function App() {
   return (
     <div>
       <header>
-        {/* NavBar Element*/}
-        <h1>Insert NavBar Here</h1>
+        <h1>Ready Set Bloom</h1>
+        <NavBar/>
       </header>
-      <h1>Project Client</h1>
       <WristletProvider>
         <FlowerProvider>
           <RibbonProvider>

@@ -1,5 +1,8 @@
 import App from './components/App'
-import Home from './components/Home'
+import Dashboard from './components/Dashboard'
+import Orders from './components/Orders'
+import Items from './components/Items'
+import NewOrderForm from './components/NewOrderForm'
 
 const routes = [
     {
@@ -8,7 +11,19 @@ const routes = [
         children: [
             {
                 path: "/",
-                element: <Home/>
+                element: <Dashboard/>
+            },
+            {
+                path: "/orders",
+                element: <Orders/>
+            },
+            {
+                path: "/items",
+                element: <Items/>
+            },
+            {
+                path: "/neworderform",
+                element: <NewOrderForm/>
             }
         ]
     }
