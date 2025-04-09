@@ -5,6 +5,7 @@
 # Remote library imports
 from flask import request
 from flask_restful import Resource
+from datetime import datetime
 
 # Local imports
 from config import app, db, api
@@ -22,6 +23,23 @@ class Home(Resource):
 def index():
     return '<h1>Corsage/Bout Server</h1>'
 
+class EventResource(Resource):
+
+    def get(self):
+        event_dicts = [event.to_dict() for event in Event.query.all()]
+        return event_dicts , 200
+
+    def post(self):
+        try:
+            json = request.get_json()
+            event_date = datetime.strptime(json.get('event_date'), '%Y-%m-%d').date()
+            new_event = Event(name=json['name'], event_date=event_date)
+            db.session.add(new_event)
+            db.session.commit()
+            return new_event.to_dict() , 201
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]} , 400
+
 class WristletResource(Resource):
 
     def get(self):
@@ -29,15 +47,15 @@ class WristletResource(Resource):
         return wristlet_dicts , 200
 
     def post(self):
-        json = request.get_json()
         try:
+            json = request.get_json()
             new_wristlet = Wristlet(color=json['color'], style=json['style'])
             db.session.add(new_wristlet)
             db.session.commit()
 
             return new_wristlet.to_dict(), 201
-        except:
-            return {"errors":["validation errors"]} , 400
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]} , 400
 
 
 class FlowerResource(Resource):
@@ -47,15 +65,15 @@ class FlowerResource(Resource):
         return flower_dicts , 200
 
     def post(self):
-        json = request.get_json()
         try:
+            json = request.get_json()
             new_flower = Flower(name=json['name'], color=json['color'])
             db.session.add(new_flower)
             db.session.commit()
 
             return new_flower.to_dict() , 201
-        except:
-            return {"errors":["validation errors"]} , 400
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]} , 400
 
 class RibbonResource(Resource):
 
@@ -64,15 +82,15 @@ class RibbonResource(Resource):
         return ribbon_dicts , 200
 
     def post(self):
-        json = request.get_json()
         try:
+            json = request.get_json()
             new_ribbon = Ribbon(color=json['color'])
             db.session.add(new_ribbon)
             db.session.commit()
 
             return new_ribbon.to_dict() , 201
-        except:
-            return {"errors":["validation errors"]} , 400
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]} , 400
 
 class AccentResource(Resource):
 
@@ -81,17 +99,18 @@ class AccentResource(Resource):
         return accent_dicts , 200
 
     def post(self):
-        json = request.get_json()
         try:
+            json = request.get_json()
             new_accent = Accent(color=json['color'])
             db.session.add(new_accent)
             db.session.commit()
 
             return new_accent.to_dict() , 201
-        except:
-            return {"errors":["validation errors"]} , 400
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]} , 400
 
 api.add_resource(Home, '/api')
+api.add_resource(EventResource, '/api/events')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
 api.add_resource(RibbonResource, '/api/ribbons')
