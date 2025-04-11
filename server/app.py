@@ -10,7 +10,7 @@ from datetime import datetime
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Wristlet, Flower, Ribbon, Accent, Event
+from models import Event, Order, Wristlet, Flower, Ribbon, Accent
 
 # Views go here!
 
@@ -39,6 +39,28 @@ class EventResource(Resource):
             return new_event.to_dict() , 201
         except Exception as e:
             return {"errors":["validation errors", str(e)]} , 400
+
+class OrderResource(Resource):
+
+    def get(self):
+        order_dicts = [order.to_dict() for order in Order.query.all()]
+        return order_dicts, 200
+
+    def post(self):
+        try:
+            json = request.get_json()
+            new_order = Order(
+                name=json['name'],
+                phone=json['phone'],
+                address=json['address'],
+                delivery_details=json['delivery_details'],
+                event_id=json['event_id']
+            )
+            db.session.add(new_order)
+            db.session.commit()
+            return new_order.to_dict(), 201
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]}, 400
 
 class WristletResource(Resource):
 
@@ -111,6 +133,7 @@ class AccentResource(Resource):
 
 api.add_resource(Home, '/api')
 api.add_resource(EventResource, '/api/events')
+api.add_resource(OrderResource, '/api/orders')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
 api.add_resource(RibbonResource, '/api/ribbons')
