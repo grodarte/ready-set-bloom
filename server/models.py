@@ -33,8 +33,8 @@ class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    phone = db.Column(db.String)
+    name = db.Column(db.String, nullable=False)
+    phone = db.Column(db.String, nullable=False)
     address = db.Column(db.String)
     delivery_details = db.Column(db.String)
 
@@ -43,6 +43,27 @@ class Order(db.Model, SerializerMixin):
     event = db.relationship('Event', back_populates='orders')
 
     serialize_rules = ('-event.orders',)
+
+    @validates('name')
+    def validate_name(self, key, name):
+        if not name:
+            raise ValueError("Event name must be provided.")
+        return name
+
+    @validates('phone')
+    def validate_phone(self, key, phone):
+        phone = phone.strip()
+        if phone.startswith('1') and len(phone) == 11:
+            phone = phone[1:]
+        if len(phone) != 10 or not phone.isdigit():
+            raise ValueError("Phone number invalid. Must be 10 digits and contain only numbers.")
+        return phone
+
+    @validates('event_id')
+    def validate_event_id(self, key, event_id):
+        if not db.session.get(Event, event_id):
+            raise ValueError("Event not found.")
+        return event_id
 
 class Wristlet(db.Model, SerializerMixin):
     __tablename__ = "wristlets"
