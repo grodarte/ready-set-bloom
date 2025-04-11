@@ -13,7 +13,15 @@ function Dashboard() {
     return (
         <div>
             <h2>Dashboard Component</h2>
-            <h3>This Week</h3>
+            <h3>This Week At A Glance</h3>
+            <ul>
+                <li>No events</li>
+            </ul>
+            <h3>Upcoming Events {"(next week)"}</h3>
+            <ul>
+                <li>No events</li>
+            </ul>
+            <h3>All Events</h3>
             {events.map(event=> <li key={event.id}>{event.event_date} | {event.name}</li>)}
         </div>
     )

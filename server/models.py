@@ -6,13 +6,16 @@ from config import db
 
 from datetime import datetime
 
-# Models go here!
 class Event(db.Model, SerializerMixin):
     __tablename__ = "events"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     event_date = db.Column(db.Date, nullable=False)
+
+    orders = db.relationship('Order', back_populates='event', cascade='all, delete-orphan')
+
+    serialize_rules = ('-orders.event',)
 
     @validates('name')
     def validate_name(self, key, name):
@@ -25,6 +28,21 @@ class Event(db.Model, SerializerMixin):
         if event_date < datetime.now().date() or not event_date:
             raise ValueError("Event date must be in the future.")
         return event_date
+
+class Order(db.Model, SerializerMixin):
+    __tablename__ = "orders"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    phone = db.Column(db.String)
+    address = db.Column(db.String)
+    delivery_details = db.Column(db.String)
+
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+
+    event = db.relationship('Event', back_populates='orders')
+
+    serialize_rules = ('-event.orders',)
 
 class Wristlet(db.Model, SerializerMixin):
     __tablename__ = "wristlets"
@@ -81,18 +99,6 @@ class Accent(db.Model, SerializerMixin):
         if not color:
             raise ValueError("Color must be provided.")
         return color
-
-# class Order(db.Model, SerializerMixin):
-#     __tablename__ = "orders"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String)
-#     phone = db.Column(db.String)
-#     address = db.Column(db.String)
-#     delivery_details = db.Column(db.String)
-#     event_date = db.Column(db.DateTime)
-
-#     items = db.relationship('Item', back_populates='order', cascade='all, delete-orphan')
 
 
 # class Item(db.Model, SerializerMixin):

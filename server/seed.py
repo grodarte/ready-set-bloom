@@ -28,7 +28,6 @@ if __name__ == '__main__':
         event2 = Event(name='St. Francis Senior Ball', event_date=date(2025, 4, 12))
         events = [event1, event2]
 
-
         print("Creating wristlets...")
         wristlet1 = Wristlet(color='gold', style='rhinestone')
         wristlet2 = Wristlet(color='silver', style='rhinestone')
