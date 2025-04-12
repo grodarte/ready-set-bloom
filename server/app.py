@@ -10,7 +10,7 @@ from datetime import datetime
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Event, Order, Wristlet, Flower, Ribbon, Accent
+from models import Event, Order, Item, Wristlet, Flower, Ribbon, Accent
 
 # Views go here!
 

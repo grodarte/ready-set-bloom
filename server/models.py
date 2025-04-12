@@ -41,8 +41,9 @@ class Order(db.Model, SerializerMixin):
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
     event = db.relationship('Event', back_populates='orders')
+    items = db.relationship('Item', back_populates='order', cascade='all, delete-orphan')
 
-    serialize_rules = ('-event.orders',)
+    serialize_rules = ('-event.orders', '-items.order')
 
     @validates('name')
     def validate_name(self, key, name):
@@ -65,12 +66,39 @@ class Order(db.Model, SerializerMixin):
             raise ValueError("Event not found.")
         return event_id
 
+class Item(db.Model, SerializerMixin):
+    __tablename__ = "items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    item_type = db.Column(db.String, nullable=False)
+    item_status = db.Column(db.String)
+    special_requests = db.Column(db.String)
+
+    wristlet_id = db.Column(db.Integer, db.ForeignKey('wristlets.id'))
+    flower_id = db.Column(db.Integer, db.ForeignKey('flowers.id'), nullable=False)
+    ribbon_id = db.Column(db.Integer, db.ForeignKey('ribbons.id'), nullable=False)
+    accent_id = db.Column(db.Integer, db.ForeignKey('accents.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
+
+    wristlet = db.relationship('Wristlet', back_populates='items')
+    flower = db.relationship('Flower', back_populates='items')
+    ribbon = db.relationship('Ribbon', back_populates='items')
+    accent = db.relationship('Accent', back_populates='items')
+    order = db.relationship('Order', back_populates='items')
+
+    serialize_rules = ('-order.items', '-wristlet.items', '-flower.items', '-ribbon.items', '-accent.items', '-order.items')
+
+
 class Wristlet(db.Model, SerializerMixin):
     __tablename__ = "wristlets"
 
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String, nullable=False)
     style = db.Column(db.String)
+
+    items = db.relationship('Item', back_populates='wristlet')
+
+    serialize_rules = ('-items.wristlet',)
 
     @validates('color')
     def validate_color(self, key, color):
@@ -84,6 +112,10 @@ class Flower(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     color = db.Column(db.String, nullable=False)
+
+    items = db.relationship('Item', back_populates='flower')
+
+    serialize_rules = ('-items.flower',)
 
     @validates('name')
     def validate_name(self, key, name):
@@ -103,6 +135,10 @@ class Ribbon(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String, nullable=False)
 
+    items = db.relationship('Item', back_populates='ribbon')
+
+    serialize_rules = ('-items.ribbon',)
+
     @validates('color')
     def validate_color(self, key, color):
         if not color:
@@ -115,22 +151,12 @@ class Accent(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     color = db.Column(db.String, nullable=False)
 
+    items = db.relationship('Item', back_populates='accent')
+
+    serialize_rules = ('-items.accent',)
+
     @validates('color')
     def validate_color(self, key, color):
         if not color:
             raise ValueError("Color must be provided.")
         return color
-
-
-# class Item(db.Model, SerializerMixin):
-#     __tablename__ = "items"
-
-#     id = db.Column(db.Integer, primary_key=True)
-#     item_type = db.Column(db.String)
-#     item_status = db.Column(db.String)
-#     wristlet_id = db.Column(db.Integer, db.ForeignKey('wristlets.id'))
-#     flower_id = db.Column(db.Integer, db.ForeignKey('flowers.id'))
-#     ribbon_id = db.Column(db.Integer, db.ForeignKey('ribbons.id'))
-#     accent_id = db.Column(db.Integer, db.ForeignKey('accents.id'))
-#     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
-#     special_requests = db.Column(db.String)
