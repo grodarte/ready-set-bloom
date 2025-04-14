@@ -15,6 +15,8 @@ class Event(db.Model, SerializerMixin):
 
     orders = db.relationship('Order', back_populates='event', cascade='all, delete-orphan')
 
+    items = association_proxy('orders', 'items')
+
     serialize_rules = ('-orders.event',)
 
     @validates('name')
@@ -41,7 +43,7 @@ class Order(db.Model, SerializerMixin):
 
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
 
-    event = db.relationship('Event', back_populates='orders')
+    event = db.relationship('Event', uselist=False, back_populates='orders')
     items = db.relationship('Item', back_populates='order', cascade='all, delete-orphan')
 
     serialize_rules = ('-event.orders', '-items.order')
@@ -82,11 +84,11 @@ class Item(db.Model, SerializerMixin):
     accent_id = db.Column(db.Integer, db.ForeignKey('accents.id'))
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
 
-    wristlet = db.relationship('Wristlet', back_populates='items')
-    flower = db.relationship('Flower', back_populates='items')
-    ribbon = db.relationship('Ribbon', back_populates='items')
-    accent = db.relationship('Accent', back_populates='items')
-    order = db.relationship('Order', back_populates='items')
+    wristlet = db.relationship('Wristlet', uselist=False, back_populates='items')
+    flower = db.relationship('Flower', uselist=False, back_populates='items')
+    ribbon = db.relationship('Ribbon', uselist=False, back_populates='items')
+    accent = db.relationship('Accent', uselist=False, back_populates='items')
+    order = db.relationship('Order', uselist=False, back_populates='items')
 
     serialize_rules = ('-order.items', '-wristlet.items', '-flower.items', '-ribbon.items', '-accent.items', '-order.items')
 
