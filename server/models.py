@@ -16,15 +16,18 @@ class Event(db.Model, SerializerMixin):
     orders = db.relationship('Order', back_populates='event', cascade='all, delete-orphan')
 
     items = association_proxy('orders', 'items')
+    wristlets = association_proxy('orders', 'wristlets')
+    flowers = association_proxy('orders', 'flowers')
+    ribbons = association_proxy('orders', 'ribbons')
+    accents = association_proxy('orders', 'accents')
 
-    serialize_rules = ('-orders.event',)
+    serialize_rules = ('-orders.event', '-items.order', '-wristlets.items', '-flowers.items', '-ribbons.items', '-accents.items')
 
     @validates('name')
     def validate_name(self, key, name):
         if not name:
             raise ValueError("Event name must be provided.")
-        name.strip()
-        return name
+        return name.strip()
 
     @validates('event_date')
     def validate_event_date(self, key, event_date):
@@ -46,18 +49,22 @@ class Order(db.Model, SerializerMixin):
     event = db.relationship('Event', uselist=False, back_populates='orders')
     items = db.relationship('Item', back_populates='order', cascade='all, delete-orphan')
 
-    serialize_rules = ('-event.orders', '-items.order')
+    wristlets = association_proxy('items', 'wristlet')
+    flowers = association_proxy('items', 'flower')
+    ribbons = association_proxy('items', 'ribbon')
+    accents = association_proxy('items', 'accent')
+
+    serialize_rules = ('-event.orders', '-items.order',)
 
     @validates('name')
     def validate_name(self, key, name):
         if not name:
             raise ValueError("Event name must be provided.")
-        name.strip()
-        return name
+        return name.strip()
 
     @validates('phone')
     def validate_phone(self, key, phone):
-        phone.strip()
+        phone = phone.strip()
         if phone.startswith('1') and len(phone) == 11:
             phone = phone[1:]
         if len(phone) != 10 or not phone.isdigit():
@@ -75,7 +82,7 @@ class Item(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     item_type = db.Column(db.String, nullable=False)
-    item_status = db.Column(db.String, default="New")
+    item_status = db.Column(db.String, default="new")
     special_requests = db.Column(db.String)
 
     wristlet_id = db.Column(db.Integer, db.ForeignKey('wristlets.id'))
@@ -90,11 +97,13 @@ class Item(db.Model, SerializerMixin):
     accent = db.relationship('Accent', uselist=False, back_populates='items')
     order = db.relationship('Order', uselist=False, back_populates='items')
 
+    event = association_proxy('order', 'event')
+
     serialize_rules = ('-order.items', '-wristlet.items', '-flower.items', '-ribbon.items', '-accent.items', '-order.items')
 
     @validates('item_type')
     def validate_item_type(self, key, item_type):
-        item_type.lower().strip()
+        item_type = item_type.lower().strip()
         allowed = ['corsage', 'boutonniere']
         if item_type not in allowed:
             raise ValueError(f'Invalid item type: {item_type}')
@@ -102,7 +111,7 @@ class Item(db.Model, SerializerMixin):
 
     @validates('item_status')
     def validate_item_status(self, key, status):
-        status.lower().strip()
+        status = status.lower().strip()
         allowed = ['new', 'prepped', 'completed']
         if status not in allowed:
             raise ValueError(f'Invalid item status: {status}')
@@ -151,10 +160,9 @@ class Wristlet(db.Model, SerializerMixin):
 
     @validates('color')
     def validate_color(self, key, color):
-        color.lower().strip()
         if not color:
             raise ValueError("Color must be provided.")
-        return color
+        return color.lower().strip()
 
     @validates('style')
     def validate_style(self, key, style):
@@ -174,17 +182,15 @@ class Flower(db.Model, SerializerMixin):
 
     @validates('name')
     def validate_name(self, key, name):
-        name.lower().strip()
         if not name:
             raise ValueError("Name must be provided.")
-        return name
+        return name.lower().strip()
 
     @validates('color')
     def validate_color(self, key, color):
-        color.lower().strip()
         if not color:
             raise ValueError("Color must be provided.")
-        return color
+        return color.lower().strip()
 
 class Ribbon(db.Model, SerializerMixin):
     __tablename__ = "ribbons"
@@ -198,10 +204,9 @@ class Ribbon(db.Model, SerializerMixin):
 
     @validates('color')
     def validate_color(self, key, color):
-        color.lower().strip()
         if not color:
             raise ValueError("Color must be provided.")
-        return color
+        return color.lower().strip()
 
 class Accent(db.Model, SerializerMixin):
     __tablename__ = "accents"
@@ -215,8 +220,8 @@ class Accent(db.Model, SerializerMixin):
 
     @validates('color')
     def validate_color(self, key, color):
-        color.lower().strip()
-        allowed = ['gold', 'silver', 'accent']
+        color = color.lower().strip()
+        allowed = ['gold', 'silver', 'black']
         if color not in allowed:
             raise ValueError("Color must be provided.")
         return color
