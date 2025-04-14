@@ -6,6 +6,9 @@ from config import db
 
 from datetime import datetime
 
+ITEM_TYPES = ['corsage', 'boutonniere']
+ITEM_STATUSES = ['new', 'prepped', 'complete']
+
 class Event(db.Model, SerializerMixin):
     __tablename__ = "events"
 
@@ -104,16 +107,16 @@ class Item(db.Model, SerializerMixin):
     @validates('item_type')
     def validate_item_type(self, key, item_type):
         item_type = item_type.lower().strip()
-        allowed = ['corsage', 'boutonniere']
-        if item_type not in allowed:
+        if item_type not in ITEM_TYPES:
             raise ValueError(f'Invalid item type: {item_type}')
+        if item_type == 'corsage' and not self.wristlet_id:
+            raise ValueError('Wristlet is required for corsages.')
         return item_type
 
     @validates('item_status')
     def validate_item_status(self, key, status):
         status = status.lower().strip()
-        allowed = ['new', 'prepped', 'completed']
-        if status not in allowed:
+        if status not in ITEM_STATUSES:
             raise ValueError(f'Invalid item status: {status}')
         return status
 
@@ -121,6 +124,8 @@ class Item(db.Model, SerializerMixin):
     def validate_wristlet_id(self, key, wristlet_id):
         if not db.session.get(Wristlet, wristlet_id):
             raise ValueError("Wristlet not found.")
+        if self.item_type == 'corsage' and not wristlet_id:
+            raise ValueError('Wristlet is required for corsages.')
         return wristlet_id
 
     @validates('flower_id')
