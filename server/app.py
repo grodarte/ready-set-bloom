@@ -50,7 +50,7 @@ class OrderResource(Resource):
         try:
             json = request.get_json()
             new_order = Order(
-                name=json['name'],
+                customer=json['customer'],
                 phone=json['phone'],
                 address=json['address'],
                 delivery_details=json['delivery_details'],

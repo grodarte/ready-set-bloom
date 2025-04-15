@@ -16,7 +16,7 @@ if __name__ == '__main__':
     with app.app_context():
         print("Starting seed...")
         ## REMOVE RIBBON MODEL AND ADD RIBBON COLOR ATTRIBUTE IF RESEEDING ##
-        
+
         # Seed code goes here!
         # print("Deleting data...")
         # Event.query.delete()
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         # db.session.add_all(events)
 
         # print("Creating orders...")
-        # order1 = Order(name="Liberty Sanchez", phone="19162131440", address="3021 10th Ave", event_id=2)
+        # order1 = Order(customer="Liberty Sanchez", phone="19162131440", address="3021 10th Ave", event_id=2)
         # orders = [order1]
         # db.session.add_all(orders)
 

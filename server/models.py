@@ -42,7 +42,7 @@ class Order(db.Model, SerializerMixin):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    customer = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, nullable=False)
     address = db.Column(db.String)
     delivery_details = db.Column(db.String)
@@ -59,10 +59,10 @@ class Order(db.Model, SerializerMixin):
 
     serialize_rules = ('-event_id', '-event.orders', '-items.order')
 
-    @validates('name')
-    def validate_name(self, key, name):
+    @validates('customer')
+    def validate_customer(self, key, name):
         if not name:
-            raise ValueError("Event name must be provided.")
+            raise ValueError("Customer name must be provided.")
         return name.strip()
 
     @validates('phone')

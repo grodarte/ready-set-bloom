@@ -7,7 +7,7 @@ function Item({ item }) {
         <tr>
             <td>{order.event.event_date}</td>
             <td>{item_status}</td>
-            <td>{order.name}</td>
+            <td>{order.customer}</td>
             <td>{item_type}</td>
             <td>{wristlet?.color}</td>
             <td>{flower.color}</td>

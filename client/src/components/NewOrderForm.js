@@ -4,7 +4,7 @@ import * as yup from 'yup';
 function NewOrderForm() {
 
     const orderSchema = yup.object().shape({
-        name: yup.string().required("Required"),
+        customer: yup.string().required("Required"),
         phone: yup.string().required("Required").matches(/^1?\d{10}$/, "Phone number must be 10 digits (optionally starting with a 1)"),
         address: yup.string().required("Required"),
         delivery_details: yup.string(),
@@ -13,7 +13,7 @@ function NewOrderForm() {
 
     const formik = useFormik({
         initialValues: {
-            name: "",
+            customer: "",
             phone: "",
             address: "",
             delivery_details: "",
