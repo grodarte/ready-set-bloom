@@ -11,7 +11,7 @@ function Orders() {
 
     return (
         <div>
-            <h2>Orders Component</h2>
+            <h1>Orders</h1>
             <table>
                 <thead>
                     <tr>

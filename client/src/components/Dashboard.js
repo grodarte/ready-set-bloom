@@ -7,7 +7,7 @@ function Dashboard() {
 
     return (
         <div>
-            <h2>Dashboard Component</h2>
+            <h1>Dashboard</h1>
             <h3>This Week</h3>
             
             <h3>Upcoming Events</h3>

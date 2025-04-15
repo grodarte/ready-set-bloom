@@ -1,8 +1,22 @@
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 
 function NewOrderForm() {
+
+    const formik = useFormik({
+        initialValues: {
+
+        },
+        onSubmit: values => {
+            alert()
+        }
+    })
     
     return (
-        <h2>New Order Form Component</h2>
+        <div>
+            <h1>Add New Order</h1>
+            <form action=""></form>
+        </div>
     )
 }
 
