@@ -86,6 +86,23 @@ class ItemResource(Resource):
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
+class ItemByID(Resource):
+    
+    def get(self, id):
+        item_dict = Item.query.filter_by(id=id).first().to_dict()
+        return item_dict, 200
+
+    def patch(self, id):
+        item = Item.query.filter_by(id=id).first()
+        json = request.get_json()
+        for attr, value in json.items():
+            setattr(item, attr, value)
+
+        db.session.add(item)
+        db.session.commit()
+
+        return item.to_dict(), 200
+
 class WristletResource(Resource):
 
     def get(self):
@@ -159,6 +176,7 @@ api.add_resource(Home, '/api')
 api.add_resource(EventResource, '/api/events')
 api.add_resource(OrderResource, '/api/orders')
 api.add_resource(ItemResource, '/api/items')
+api.add_resource(ItemByID, '/api/items/<int:id>')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
 # api.add_resource(RibbonResource, '/api/ribbons')
