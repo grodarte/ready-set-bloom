@@ -27,7 +27,7 @@ class EventResource(Resource):
 
     def get(self):
         event_dicts = [event.to_dict() for event in Event.query.all()]
-        return event_dicts , 200
+        return event_dicts, 200
 
     def post(self):
         try:
@@ -36,9 +36,9 @@ class EventResource(Resource):
             new_event = Event(name=json['name'], event_date=event_date)
             db.session.add(new_event)
             db.session.commit()
-            return new_event.to_dict() , 201
+            return new_event.to_dict(), 201
         except Exception as e:
-            return {"errors":["validation errors", str(e)]} , 400
+            return {"errors":["validation errors", str(e)]}, 400
 
 class OrderResource(Resource):
 
@@ -62,11 +62,35 @@ class OrderResource(Resource):
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
+class ItemResource(Resource):
+
+    def get(self):
+        item_dicts = [item.to_dict() for item in Item.query.all()]
+        return item_dicts, 200
+
+    def post(self):
+        try:
+            json = request.get_json()
+            new_item = Item(
+                item_type=json['item_type'],
+                special_requests=json['special_requests'],
+                wristlet_id=json['wristlet_id'],
+                flower_id=json['flower_id'],
+                ribbon_id=json['ribbon_id'],
+                accent_id=json['accent_id'],
+                order_id=json['order_id']
+            )
+            db.session.add(new_item)
+            db.session.commit()
+            return new_item.to_dict(), 201
+        except Exception as e:
+            return {"errors":["validation errors", str(e)]}, 400
+
 class WristletResource(Resource):
 
     def get(self):
         wristlet_dicts = [wristlet.to_dict() for wristlet in Wristlet.query.all()]
-        return wristlet_dicts , 200
+        return wristlet_dicts, 200
 
     def post(self):
         try:
@@ -77,7 +101,7 @@ class WristletResource(Resource):
 
             return new_wristlet.to_dict(), 201
         except Exception as e:
-            return {"errors":["validation errors", str(e)]} , 400
+            return {"errors":["validation errors", str(e)]}, 400
 
 
 class FlowerResource(Resource):
@@ -93,15 +117,15 @@ class FlowerResource(Resource):
             db.session.add(new_flower)
             db.session.commit()
 
-            return new_flower.to_dict() , 201
+            return new_flower.to_dict(), 201
         except Exception as e:
-            return {"errors":["validation errors", str(e)]} , 400
+            return {"errors":["validation errors", str(e)]}, 400
 
 class RibbonResource(Resource):
 
     def get(self):
         ribbon_dicts = [ribbon.to_dict() for ribbon in Ribbon.query.all()]
-        return ribbon_dicts , 200
+        return ribbon_dicts, 200
 
     def post(self):
         try:
@@ -110,15 +134,15 @@ class RibbonResource(Resource):
             db.session.add(new_ribbon)
             db.session.commit()
 
-            return new_ribbon.to_dict() , 201
+            return new_ribbon.to_dict(), 201
         except Exception as e:
-            return {"errors":["validation errors", str(e)]} , 400
+            return {"errors":["validation errors", str(e)]}, 400
 
 class AccentResource(Resource):
 
     def get(self):
         accent_dicts = [accent.to_dict() for accent in Accent.query.all()]
-        return accent_dicts , 200
+        return accent_dicts, 200
 
     def post(self):
         try:
@@ -127,13 +151,14 @@ class AccentResource(Resource):
             db.session.add(new_accent)
             db.session.commit()
 
-            return new_accent.to_dict() , 201
+            return new_accent.to_dict(), 201
         except Exception as e:
-            return {"errors":["validation errors", str(e)]} , 400
+            return {"errors":["validation errors", str(e)]}, 400
 
 api.add_resource(Home, '/api')
 api.add_resource(EventResource, '/api/events')
 api.add_resource(OrderResource, '/api/orders')
+api.add_resource(ItemResource, '/api/items')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
 api.add_resource(RibbonResource, '/api/ribbons')
