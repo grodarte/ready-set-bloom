@@ -24,7 +24,7 @@ class Event(db.Model, SerializerMixin):
     ribbons = association_proxy('orders', 'ribbons')
     accents = association_proxy('orders', 'accents')
 
-    serialize_rules = ('-orders.event', '-items.order', '-wristlets.items', '-flowers.items', '-ribbons.items', '-accents.items')
+    serialize_rules = ('-orders', '-items.order', '-wristlets.items', '-flowers.items', '-ribbons.items', '-accents.items')
 
     @validates('name')
     def validate_name(self, key, name):
@@ -57,7 +57,7 @@ class Order(db.Model, SerializerMixin):
     ribbons = association_proxy('items', 'ribbon')
     accents = association_proxy('items', 'accent')
 
-    serialize_rules = ('-event_id', '-event.orders', '-items.order',)
+    serialize_rules = ('-event_id', '-event.orders', '-items.order')
 
     @validates('name')
     def validate_name(self, key, name):
@@ -161,7 +161,7 @@ class Wristlet(db.Model, SerializerMixin):
 
     items = db.relationship('Item', back_populates='wristlet')
 
-    serialize_rules = ('-items.wristlet',)
+    serialize_rules = ('-items',)
 
     @validates('color')
     def validate_color(self, key, color):
@@ -183,7 +183,7 @@ class Flower(db.Model, SerializerMixin):
 
     items = db.relationship('Item', back_populates='flower')
 
-    serialize_rules = ('-items.flower',)
+    serialize_rules = ('-items',)
 
     @validates('name')
     def validate_name(self, key, name):
@@ -205,7 +205,7 @@ class Ribbon(db.Model, SerializerMixin):
 
     items = db.relationship('Item', back_populates='ribbon')
 
-    serialize_rules = ('-items.ribbon',)
+    serialize_rules = ('-items',)
 
     @validates('color')
     def validate_color(self, key, color):
@@ -221,7 +221,7 @@ class Accent(db.Model, SerializerMixin):
 
     items = db.relationship('Item', back_populates='accent')
 
-    serialize_rules = ('-items.accent',)
+    serialize_rules = ('-items',)
 
     @validates('color')
     def validate_color(self, key, color):
