@@ -15,6 +15,8 @@ if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
         print("Starting seed...")
+        ## REMOVE RIBBON MODEL AND ADD RIBBON COLOR ATTRIBUTE IF RESEEDING ##
+        
         # Seed code goes here!
         # print("Deleting data...")
         # Event.query.delete()

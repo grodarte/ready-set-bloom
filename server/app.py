@@ -10,7 +10,7 @@ from datetime import datetime
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import Event, Order, Item, Wristlet, Flower, Ribbon, Accent
+from models import Event, Order, Item, Wristlet, Flower, Accent
 
 # Views go here!
 
@@ -76,7 +76,7 @@ class ItemResource(Resource):
                 special_requests=json['special_requests'],
                 wristlet_id=json['wristlet_id'],
                 flower_id=json['flower_id'],
-                ribbon_id=json['ribbon_id'],
+                ribbon_color=json['ribbon_color'],
                 accent_id=json['accent_id'],
                 order_id=json['order_id']
             )
@@ -121,22 +121,22 @@ class FlowerResource(Resource):
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
-class RibbonResource(Resource):
+# class RibbonResource(Resource):
 
-    def get(self):
-        ribbon_dicts = [ribbon.to_dict() for ribbon in Ribbon.query.all()]
-        return ribbon_dicts, 200
+#     def get(self):
+#         ribbon_dicts = [ribbon.to_dict() for ribbon in Ribbon.query.all()]
+#         return ribbon_dicts, 200
 
-    def post(self):
-        try:
-            json = request.get_json()
-            new_ribbon = Ribbon(color=json['color'])
-            db.session.add(new_ribbon)
-            db.session.commit()
+#     def post(self):
+#         try:
+#             json = request.get_json()
+#             new_ribbon = Ribbon(color=json['color'])
+#             db.session.add(new_ribbon)
+#             db.session.commit()
 
-            return new_ribbon.to_dict(), 201
-        except Exception as e:
-            return {"errors":["validation errors", str(e)]}, 400
+#             return new_ribbon.to_dict(), 201
+#         except Exception as e:
+#             return {"errors":["validation errors", str(e)]}, 400
 
 class AccentResource(Resource):
 
@@ -161,7 +161,7 @@ api.add_resource(OrderResource, '/api/orders')
 api.add_resource(ItemResource, '/api/items')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
-api.add_resource(RibbonResource, '/api/ribbons')
+# api.add_resource(RibbonResource, '/api/ribbons')
 api.add_resource(AccentResource, '/api/accents')
 
 

@@ -3,7 +3,7 @@ import { OrderProvider } from "./order";
 import { ItemProvider } from "./item";
 import { WristletProvider } from "../context/wristlet";
 import { FlowerProvider } from "../context/flower";
-import { RibbonProvider } from "../context/ribbon";
+// import { RibbonProvider } from "../context/ribbon";
 import { AccentProvider } from "../context/accent";
 
 function ContextProviderWrapper({ children }) {
@@ -13,11 +13,11 @@ function ContextProviderWrapper({ children }) {
                 <ItemProvider>
                     <WristletProvider>
                         <FlowerProvider>
-                            <RibbonProvider>
+                            {/* <RibbonProvider> */}
                                 <AccentProvider>
                                     {children}
                                 </AccentProvider>
-                            </RibbonProvider>
+                            {/* </RibbonProvider> */}
                         </FlowerProvider>
                     </WristletProvider>
                 </ItemProvider>

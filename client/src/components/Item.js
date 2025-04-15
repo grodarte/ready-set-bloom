@@ -1,7 +1,7 @@
 
 
 function Item({ item }) {
-    const { id, item_status, order, item_type, wristlet, ribbon, flower, accent, special_requests} = item
+    const { id, item_status, order, item_type, wristlet, ribbon_color, flower, accent, special_requests} = item
 
     return (
         <tr>
@@ -11,7 +11,7 @@ function Item({ item }) {
             <td>{item_type}</td>
             <td>{wristlet?.color}</td>
             <td>{flower.color}</td>
-            <td>{ribbon.color}</td>
+            <td>{ribbon_color}</td>
             <td>{accent?.color}</td>
             <td>{special_requests}</td>
         </tr>
