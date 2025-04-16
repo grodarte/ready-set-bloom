@@ -1,5 +1,5 @@
 import { Field, ErrorMessage, FieldArray, useFormikContext} from 'formik';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { FlowerContext } from '../context/flower';
 import { WristletContext } from '../context/wristlet';
 import { AccentContext } from '../context/accent';
@@ -9,6 +9,21 @@ function ItemBuilder() {
     const { flowers } = useContext(FlowerContext)
     const { wristlets } = useContext(WristletContext)
     const { accents } = useContext(AccentContext)
+
+    useEffect(()=>{
+        if (values.items.length === 0) {
+            setFieldValue("items", [
+                {
+                    item_type: '',
+                    wristlet_id: '',
+                    flower_id: '',
+                    ribbon_color: '',
+                    accent_id: '',
+                    special_requests: ''
+                }
+            ])
+        }
+    }, [values.items, setFieldValue])
 
     return (
         <FieldArray name="items">
