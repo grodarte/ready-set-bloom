@@ -86,6 +86,46 @@ class ItemResource(Resource):
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
+class FullOrderResource(Resource):
+
+    def post(self):
+        json = request.get_json()
+        try:
+            with db.session.begin():
+                order = Order(
+                customer=json['customer'],
+                phone=json['phone'],
+                address=json['address'],
+                delivery_details=json['delivery_details'],
+                event_id=json['event_id']
+                )
+                db.session.add(order)
+                db.session.flush()
+
+                items = []
+                for item in json['items']:
+                    cleaned_item = {
+                        **item,
+                        'order_id': order.id
+                    }
+                    if not cleaned_item.get('accent_id'):
+                        cleaned_item.pop('accent_id', None)
+                    if not cleaned_item.get('wristlet_id'):
+                        cleaned_item.pop('wristlet_id', None)
+                    
+                    item = Item(**cleaned_item)
+                    db.session.add(item)
+                    items.append(item)
+
+            return {
+                "order": order.to_dict(),
+                "items": [item.to_dict() for item in items]
+            }, 201
+        except Exception as e:
+            db.session.rollback()
+            return {"error": str(e)}, 400
+
+
 class ItemByID(Resource):
     
     def get(self, id):
@@ -138,23 +178,6 @@ class FlowerResource(Resource):
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
-# class RibbonResource(Resource):
-
-#     def get(self):
-#         ribbon_dicts = [ribbon.to_dict() for ribbon in Ribbon.query.all()]
-#         return ribbon_dicts, 200
-
-#     def post(self):
-#         try:
-#             json = request.get_json()
-#             new_ribbon = Ribbon(color=json['color'])
-#             db.session.add(new_ribbon)
-#             db.session.commit()
-
-#             return new_ribbon.to_dict(), 201
-#         except Exception as e:
-#             return {"errors":["validation errors", str(e)]}, 400
-
 class AccentResource(Resource):
 
     def get(self):
@@ -176,10 +199,10 @@ api.add_resource(Home, '/api')
 api.add_resource(EventResource, '/api/events')
 api.add_resource(OrderResource, '/api/orders')
 api.add_resource(ItemResource, '/api/items')
+api.add_resource(FullOrderResource, '/api/orders/full')
 api.add_resource(ItemByID, '/api/items/<int:id>')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
-# api.add_resource(RibbonResource, '/api/ribbons')
 api.add_resource(AccentResource, '/api/accents')
 
 
