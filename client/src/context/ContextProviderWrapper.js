@@ -4,6 +4,7 @@ import { ItemProvider } from "./item";
 import { WristletProvider } from "../context/wristlet";
 import { FlowerProvider } from "../context/flower";
 import { AccentProvider } from "../context/accent";
+import { DateProvider } from "./DateContext";
 
 function ContextProviderWrapper({ children }) {
     return (
@@ -13,7 +14,9 @@ function ContextProviderWrapper({ children }) {
                     <WristletProvider>
                         <FlowerProvider>
                             <AccentProvider>
-                                {children}
+                                <DateProvider>
+                                    {children}
+                                </DateProvider>
                             </AccentProvider>
                         </FlowerProvider>
                     </WristletProvider>

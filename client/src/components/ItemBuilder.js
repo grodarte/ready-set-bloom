@@ -101,7 +101,7 @@ function ItemBuilder() {
                                         name={`items[${index}].accent_id`}
                                         onChange={(e) => setFieldValue(`items[${index}].accent_id`, Number(e.target.value))}
                                     >
-                                        <option value="">--Select accent--</option>
+                                        <option value="">--Select Accent--</option>
                                         {accents.map(accent=>(
                                             <option key={accent.id} value={accent.id}>
                                                 {accent.color}
