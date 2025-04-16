@@ -5,10 +5,13 @@ import Item from "./Item";
 function Items() {
     const { items } = useContext(ItemContext)
 
+    
+    if (!items) return <p>Loading items...</p>
+    
     const itemElements = items.map(item=>{
         return <Item key={item.id} item={item}/>
     })
-
+    
     return (
         <div>
             <h1>Items</h1>

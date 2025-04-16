@@ -22,7 +22,7 @@ function ItemBuilder() {
                         return (
                             <div key={index}>
                                 <div>
-                                    <label for="item_type">Item Type</label>
+                                    <label htmlFor="item_type">Item Type</label>
                                     <Field
                                         as="select"
                                         name={`items[${index}].item_type`}
@@ -42,7 +42,7 @@ function ItemBuilder() {
                                 </div>
                                 {!isBoutonniere && (
                                     <div>
-                                        <label>Wristlet</label>
+                                        <label htmlFor='wristlet_id'>Wristlet</label>
                                         <Field 
                                             as="select"
                                             name={`items[${index}].wristlet_id`}
@@ -59,7 +59,7 @@ function ItemBuilder() {
                                     </div>
                                 )}
                                 <div>
-                                    <label for="flower_id">Flower Color</label>
+                                    <label htmlFor="flower_id">Flower Color</label>
                                     <Field
                                         as="select"
                                         name={`items[${index}].flower_id`}
@@ -75,12 +75,12 @@ function ItemBuilder() {
                                     <ErrorMessage name={`items[${index}].flower_id`} component="div" style={{ color: "red" }}/>
                                 </div>
                                 <div>
-                                    <label>Ribbon Color</label>
+                                    <label htmlFor='ribbon_id'>Ribbon Color</label>
                                     <Field name={`items[${index}].ribbon_color`} />
                                     <ErrorMessage name={`items[${index}].ribbon_color`} component="div" style={{ color: "red" }}/>
                                 </div>
                                 <div>
-                                    <label for="accent_id">Accent Ribbon</label>
+                                    <label htmlFor="accent_id">Accent Ribbon</label>
                                     <Field
                                         as="select"
                                         name={`items[${index}].accent_id`}
@@ -96,7 +96,7 @@ function ItemBuilder() {
                                     <ErrorMessage name={`items[${index}].accent_id`} component="div" style={{ color: "red" }}/>
                                 </div>
                                 <div>
-                                    <label>Special Requests</label>
+                                    <label htmlFor='special_requests'>Special Requests</label>
                                     <Field as="textarea" name={`items[${index}].special_requests`} rows="1"/>
                                     <ErrorMessage name={`items[${index}].special_requests`} component="div" style={{ color: "red" }}/>
                                 </div>

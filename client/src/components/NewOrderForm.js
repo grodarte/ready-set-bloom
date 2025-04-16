@@ -32,60 +32,20 @@ function NewOrderForm() {
     })
 
     function handleSubmit(values) {
-        const { items, ...orderData } = values
-        console.log("Submitting order...")
-        fetch('/api/orders', {
+        fetch('/api/orders/full', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(orderData)
+            body: JSON.stringify(values)
         })
         .then(r=>{
             if (!r.ok) throw new Error("Failed to create order")
             return r.json()
         })
-        .then(newOrder => {
-            console.log("Order created:", newOrder)
-            setOrders(orders => [
-                ...orders,
-                newOrder
-            ])
-            
-            const itemRequests = items.map(item=> {
-                const cleanedItem = {
-                    ...item,
-                    order_id: newOrder.id
-                }
-
-                if (!cleanedItem.accent_id) delete cleanedItem.accent_id
-                if (!cleanedItem.wristlet_id) delete cleanedItem.wristlet_id
-                if (!cleanedItem.special_requests) delete cleanedItem.special_requests
-
-                return fetch('/api/items', {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        ...item,
-                        accent_id: item.accent_id === "" ? null : item.accent_id,
-                        order_id: newOrder.id,
-                    })
-                })
-                .then(r => {
-                    if (!r.ok) throw new Error("Failed to create item");
-                    return r.json()
-                })
-            })
-            return Promise.all(itemRequests)
-        })
-        .then(itemResponses => {
-            console.log("All items submitted!", itemResponses)
-            setItems(items => [
-                ...items,
-                ...itemResponses
-            ])
+        .then(newOrderData=> {
+            setOrders(orders=>[...orders, newOrderData.order])
+            setItems(items=>[...items, ...newOrderData.items])
         })
         .catch(err => {
             console.error("Error submitting order and items:", err)
@@ -111,27 +71,27 @@ function NewOrderForm() {
                 <Form>
                     <h3>Customer Info</h3>
                     <div>
-                        <label for="customer">Customer Name</label>
+                        <label htmlFor="customer">Customer Name</label>
                         <Field name="customer"/>
                         <ErrorMessage name="customer" component="div" style={{ color: "red" }}/>
                     </div>
                     <div>
-                        <label for="phone">Customer Phone</label>
+                        <label htmlFor="phone">Customer Phone</label>
                         <Field name="phone"/>
                         <ErrorMessage name="phone" component="div" style={{ color: "red" }}/>
                     </div>  
                     <div>
-                        <label for="address">Customer Address</label>
+                        <label htmlFor="address">Customer Address</label>
                         <Field name="address"/>
                         <ErrorMessage name="address" component="div" style={{ color: "red" }}/>
                     </div>     
                     <div>
-                        <label for="delivery_details">Delivery Instructions</label>
+                        <label htmlFor="delivery_details">Delivery Instructions</label>
                         <Field name="delivery_details"/>
                         <ErrorMessage name="delivery_details" component="div" style={{ color: "red" }}/>
                     </div>   
                     <div>
-                        <label for="event_id">Event</label>
+                        <label htmlFor="event_id">Event</label>
                         <Field 
                             as="select"
                             name="event_id"
