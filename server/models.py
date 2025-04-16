@@ -146,7 +146,7 @@ class Item(db.Model, SerializerMixin):
 
     @validates('accent_id')
     def validate_accent_id(self, key, accent_id):
-        if not db.session.get(Accent, accent_id):
+        if accent_id and not db.session.get(Accent, accent_id):
             raise ValueError("Accent not found.")
         return accent_id
 

@@ -82,7 +82,7 @@ class ItemResource(Resource):
             )
             db.session.add(new_item)
             db.session.commit()
-            return new_item.to_dict(), 201
+            return new_item.to_dict(rules=('order.event',)), 201
         except Exception as e:
             return {"errors":["validation errors", str(e)]}, 400
 
