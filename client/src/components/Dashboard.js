@@ -31,6 +31,8 @@ function Dashboard() {
             {
                 thisWeekEvents.length === 0 ? <h3>No events this week.</h3> : thisWeekEvents.map(event=> <h3>{event.event_date} | {event.name}</h3>)
             }
+            <PrepSummary events={thisWeekEvents}/>
+            
             <h2>Upcoming Events</h2>
             {
                 upcomingEvents.length === 0 ? <h3>No upcoming events.</h3> : upcomingEvents.map(event=> <li key={event.id}>{event.event_date} | {event.name}</li>)

@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { OrderContext } from '../context/order';
 import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
@@ -11,6 +11,7 @@ function NewOrderForm() {
     const { orders, setOrders } = useContext(OrderContext)
     const { items, setItems } = useContext(ItemContext)
     const { events } = useContext(EventContext)
+    const [successMsg, setSuccessMsg] = useState("")
 
     const orderSchema = yup.object().shape({
         customer: yup.string().required("Required"),
@@ -32,7 +33,7 @@ function NewOrderForm() {
         .min(1, "You must add at least one item")
     })
 
-    function handleSubmit(values) {
+    function handleSubmit(values, { resetForm }) {
         fetch('/api/orders/full', {
             method: "POST",
             headers: {
@@ -47,6 +48,11 @@ function NewOrderForm() {
         .then(newOrderData=> {
             setOrders(orders=>[...orders, newOrderData.order])
             setItems(items=>[...items, ...newOrderData.items])
+
+            resetForm()
+            setSuccessMsg("Order created successfully!")
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+            setTimeout(()=> setSuccessMsg(""), 3000)
         })
         .catch(err => {
             console.error("Error submitting order and items:", err)
@@ -68,62 +74,66 @@ function NewOrderForm() {
             validationSchema={orderSchema}
             onSubmit={handleSubmit}
         >
+            
             {({ values, setFieldValue }) => (
-                <Form className='order-form-container'>
-                    <h2 className='order-form-title'>New Order</h2>
+                <>
+                    {successMsg && <p style={{ color: "green", fontWeight: "bold" }}>{successMsg}</p>}
+                    <Form className='order-form-container'>
+                        <h2 className='order-form-title'>New Order</h2>
 
-                    <div className='form-section'>
-                        <h3>Customer Info</h3>
+                        <div className='form-section'>
+                            <h3>Customer Info</h3>
 
-                        <div className='form-group'>
-                            <label htmlFor="customer">Customer Name</label>
-                            <Field name="customer"/>
-                            <ErrorMessage name="customer" component="div" className='error'/>
+                            <div className='form-group'>
+                                <label htmlFor="customer">Customer Name</label>
+                                <Field name="customer"/>
+                                <ErrorMessage name="customer" component="div" className='error'/>
+                            </div>
                         </div>
-                    </div>
-                    <div className='form-section'>
-                        <div className='form-group'>
-                            <label htmlFor="phone">Customer Phone</label>
-                            <Field name="phone"/>
-                            <ErrorMessage name="phone" component="div" className='error'/>
-                        </div>
-                    </div>  
-                    <div className='form-section'>
-                        <div className='form-group'>
-                            <label htmlFor="address">Customer Address</label>
-                            <Field name="address"/>
-                            <ErrorMessage name="address" component="div" className='error'/>
-                        </div>
-                    </div>     
-                    <div className='form-section'>
-                        <div className='form-group'>
-                            <label htmlFor="delivery_details">Delivery Instructions</label>
-                            <Field name="delivery_details"/>
-                            <ErrorMessage name="delivery_details" component="div" className='error'/>
-                        </div>
-                    </div>   
-                    <div className='form-section'>
-                        <h3>Event</h3>
-                        <div className='form-group'>
-                            <label htmlFor="event_id"></label>
-                            <Field 
-                                as="select"
-                                name="event_id"
-                                onChange={(e)=> setFieldValue("event_id", Number(e.target.value))}
-                            >
-                                <option value="">Select Event</option>
-                                {events.map(event=>(
-                                    <option key={event.id} value={event.id}>
-                                        {event.event_date} | {event.name}
-                                    </option>
-                                ))}
-                            </Field>
-                            <ErrorMessage name="event_id" component="div" className='error'/>
-                        </div>
-                    </div>     
-                    <ItemBuilder />
-                    <button type="submit">Submit Order</button>                                                                   
-                </Form>
+                        <div className='form-section'>
+                            <div className='form-group'>
+                                <label htmlFor="phone">Customer Phone</label>
+                                <Field name="phone"/>
+                                <ErrorMessage name="phone" component="div" className='error'/>
+                            </div>
+                        </div>  
+                        <div className='form-section'>
+                            <div className='form-group'>
+                                <label htmlFor="address">Customer Address</label>
+                                <Field name="address"/>
+                                <ErrorMessage name="address" component="div" className='error'/>
+                            </div>
+                        </div>     
+                        <div className='form-section'>
+                            <div className='form-group'>
+                                <label htmlFor="delivery_details">Delivery Instructions</label>
+                                <Field name="delivery_details"/>
+                                <ErrorMessage name="delivery_details" component="div" className='error'/>
+                            </div>
+                        </div>   
+                        <div className='form-section'>
+                            <h3>Event</h3>
+                            <div className='form-group'>
+                                <label htmlFor="event_id"></label>
+                                <Field 
+                                    as="select"
+                                    name="event_id"
+                                    onChange={(e)=> setFieldValue("event_id", Number(e.target.value))}
+                                >
+                                    <option value="">Select Event</option>
+                                    {events.map(event=>(
+                                        <option key={event.id} value={event.id}>
+                                            {event.event_date} | {event.name}
+                                        </option>
+                                    ))}
+                                </Field>
+                                <ErrorMessage name="event_id" component="div" className='error'/>
+                            </div>
+                        </div>     
+                        <ItemBuilder />
+                        <button type="submit">Submit Order</button>                                                                   
+                    </Form>
+                </>
             )}
         </Formik>
     )
