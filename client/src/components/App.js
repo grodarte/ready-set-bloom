@@ -7,7 +7,6 @@ function App() {
   return (
     <div>
       <header>
-        <h1>Ready Set Bloom</h1>
         <NavBar/>
       </header>
       <ContextProviderWrapper>
