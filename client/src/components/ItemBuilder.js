@@ -36,7 +36,7 @@ function ItemBuilder() {
 
                         return (
                             <div key={index}>
-                                <div>
+                                <div className='form-group'>
                                     <label htmlFor="item_type">Item Type</label>
                                     <Field
                                         as="select"
@@ -53,10 +53,10 @@ function ItemBuilder() {
                                         <option value="corsage">Corsage</option>
                                         <option value="boutonniere">Boutonniere</option>
                                     </Field>
-                                    <ErrorMessage name={`items[${index}].item_type`} component="div" style={{ color: "red" }}/>
+                                    <ErrorMessage name={`items[${index}].item_type`} component="div" className='error'/>
                                 </div>
                                 {!isBoutonniere && (
-                                    <div>
+                                    <div className='form-group'>
                                         <label htmlFor='wristlet_id'>Wristlet</label>
                                         <Field 
                                             as="select"
@@ -70,10 +70,10 @@ function ItemBuilder() {
                                                 </option>
                                             ))}
                                         </Field>
-                                        <ErrorMessage name={`items[${index}].wristlet_id`} component="div" style={{ color: "red" }} />
+                                        <ErrorMessage name={`items[${index}].wristlet_id`} component="div" className='error' />
                                     </div>
                                 )}
-                                <div>
+                                <div className='form-group'>
                                     <label htmlFor="flower_id">Flower Color</label>
                                     <Field
                                         as="select"
@@ -87,14 +87,14 @@ function ItemBuilder() {
                                             </option>
                                         ))}
                                     </Field>
-                                    <ErrorMessage name={`items[${index}].flower_id`} component="div" style={{ color: "red" }}/>
+                                    <ErrorMessage name={`items[${index}].flower_id`} component="div" className='error'/>
                                 </div>
-                                <div>
+                                <div className='form-group'>
                                     <label htmlFor='ribbon_id'>Ribbon Color</label>
                                     <Field name={`items[${index}].ribbon_color`} />
-                                    <ErrorMessage name={`items[${index}].ribbon_color`} component="div" style={{ color: "red" }}/>
+                                    <ErrorMessage name={`items[${index}].ribbon_color`} component="div" className='error'/>
                                 </div>
-                                <div>
+                                <div className='form-group'>
                                     <label htmlFor="accent_id">Accent Ribbon</label>
                                     <Field
                                         as="select"
@@ -108,15 +108,15 @@ function ItemBuilder() {
                                             </option>
                                         ))}
                                     </Field>
-                                    <ErrorMessage name={`items[${index}].accent_id`} component="div" style={{ color: "red" }}/>
+                                    <ErrorMessage name={`items[${index}].accent_id`} component="div" className='error'/>
                                 </div>
-                                <div>
+                                <div className='form-group'>
                                     <label htmlFor='special_requests'>Special Requests</label>
                                     <Field as="textarea" name={`items[${index}].special_requests`} rows="1"/>
-                                    <ErrorMessage name={`items[${index}].special_requests`} component="div" style={{ color: "red" }}/>
+                                    <ErrorMessage name={`items[${index}].special_requests`} component="div" className='error'/>
                                 </div>
 
-                                <button type="button" onClick={() => remove(index)}>
+                                <button type="button" className='remove-item' onClick={() => remove(index)}>
                                     Remove Item
                                 </button>                                
                             </div>
@@ -124,6 +124,7 @@ function ItemBuilder() {
                     })}
                     <button
                         type="button"
+                        className='add-item'
                         onClick={()=>
                             push({
                                 item_type: '',
