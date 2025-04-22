@@ -5,6 +5,7 @@ import { OrderContext } from '../context/order';
 import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
 import ItemBuilder from './ItemBuilder';
+import "../css/neworderform.css"
 
 function NewOrderForm() {
     const { orders, setOrders } = useContext(OrderContext)
@@ -68,43 +69,57 @@ function NewOrderForm() {
             onSubmit={handleSubmit}
         >
             {({ values, setFieldValue }) => (
-                <Form>
-                    <h3>Customer Info</h3>
-                    <div>
-                        <label htmlFor="customer">Customer Name</label>
-                        <Field name="customer"/>
-                        <ErrorMessage name="customer" component="div" style={{ color: "red" }}/>
+                <Form className='order-form-container'>
+                    <h2 className='order-form-title'>New Order</h2>
+
+                    <div className='form-section'>
+                        <h3>Customer Info</h3>
+
+                        <div className='form-group'>
+                            <label htmlFor="customer">Customer Name</label>
+                            <Field name="customer"/>
+                            <ErrorMessage name="customer" component="div" className='error'/>
+                        </div>
                     </div>
-                    <div>
-                        <label htmlFor="phone">Customer Phone</label>
-                        <Field name="phone"/>
-                        <ErrorMessage name="phone" component="div" style={{ color: "red" }}/>
+                    <div className='form-section'>
+                        <div className='form-group'>
+                            <label htmlFor="phone">Customer Phone</label>
+                            <Field name="phone"/>
+                            <ErrorMessage name="phone" component="div" className='error'/>
+                        </div>
                     </div>  
-                    <div>
-                        <label htmlFor="address">Customer Address</label>
-                        <Field name="address"/>
-                        <ErrorMessage name="address" component="div" style={{ color: "red" }}/>
+                    <div className='form-section'>
+                        <div className='form-group'>
+                            <label htmlFor="address">Customer Address</label>
+                            <Field name="address"/>
+                            <ErrorMessage name="address" component="div" className='error'/>
+                        </div>
                     </div>     
-                    <div>
-                        <label htmlFor="delivery_details">Delivery Instructions</label>
-                        <Field name="delivery_details"/>
-                        <ErrorMessage name="delivery_details" component="div" style={{ color: "red" }}/>
+                    <div className='form-section'>
+                        <div className='form-group'>
+                            <label htmlFor="delivery_details">Delivery Instructions</label>
+                            <Field name="delivery_details"/>
+                            <ErrorMessage name="delivery_details" component="div" className='error'/>
+                        </div>
                     </div>   
-                    <div>
-                        <label htmlFor="event_id">Event</label>
-                        <Field 
-                            as="select"
-                            name="event_id"
-                            onChange={(e)=> setFieldValue("event_id", Number(e.target.value))}
-                        >
-                            <option value="">--Select an event--</option>
-                            {events.map(event=>(
-                                <option key={event.id} value={event.id}>
-                                    {event.event_date} | {event.name}
-                                </option>
-                            ))}
-                        </Field>
-                        <ErrorMessage name="event_id" component="div" style={{ color: "red" }}/>
+                    <div className='form-section'>
+                        <h3>Event</h3>
+                        <div className='form-group'>
+                            <label htmlFor="event_id"></label>
+                            <Field 
+                                as="select"
+                                name="event_id"
+                                onChange={(e)=> setFieldValue("event_id", Number(e.target.value))}
+                            >
+                                <option value="">Select Event</option>
+                                {events.map(event=>(
+                                    <option key={event.id} value={event.id}>
+                                        {event.event_date} | {event.name}
+                                    </option>
+                                ))}
+                            </Field>
+                            <ErrorMessage name="event_id" component="div" className='error'/>
+                        </div>
                     </div>     
                     <ItemBuilder />
                     <button type="submit">Submit Order</button>                                                                   
