@@ -24,9 +24,6 @@ function Dashboard() {
         return eventDate < today
     })
 
-    console.log(events)
-
-    console.log(thisWeekEvents, upcomingEvents)
     return (
         <div>
             <h1>Dashboard</h1>

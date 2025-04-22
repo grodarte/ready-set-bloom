@@ -1,6 +1,6 @@
 
 
-function PrepSummary({ items, orders }) {
+function PrepSummary({ events }) {
     return (
         <div>
 

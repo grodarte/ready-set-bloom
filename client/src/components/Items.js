@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { ItemContext } from "../context/item";
 import Item from "./Item";
+import "../css/items.css";
 
 function Items() {
     const { items } = useContext(ItemContext)
@@ -13,9 +14,9 @@ function Items() {
     })
     
     return (
-        <div>
-            <h1>Items</h1>
-            <table>
+        <div className="items-container">
+            <h1 className="items-heading">Items</h1>
+            <table className="items-table">
                 <thead>
                     <tr>
                         <th>Event Date</th>
