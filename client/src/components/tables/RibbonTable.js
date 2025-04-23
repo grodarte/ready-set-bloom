@@ -1,6 +1,18 @@
+import { useContext } from "react"
 
+function RibbonTable({ items, corsages, bouts, bouquets }) {
+    const ribbons = [...new Set(items.map(item => item.ribbon_color))]
 
-function RibbonTable() {
+    const ribbonRows = ribbons.map(ribbon => (
+        <tr>
+            <td>{ribbon}</td>
+            <td>{corsages.filter(c => c.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
+            <td>{bouts.filter(b => b.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
+            <td>{bouquets.filter(b => b.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
+
+        </tr>
+    ))
+
     return (
         <div className="table-container">
             <table>
@@ -14,7 +26,7 @@ function RibbonTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* MAP THROUGH EACH COLOR AND COUNT QTY NEEDED */}
+                    {ribbonRows}
                 </tbody>
             </table>
         </div>

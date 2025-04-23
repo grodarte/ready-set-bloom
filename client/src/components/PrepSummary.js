@@ -44,7 +44,7 @@ function PrepSummary({ events }) {
             <WristletTable corsages={prepStats.corsages}/>
             <AccentTable corsages={prepStats.corsages} bouts={prepStats.bouts}/>
             <FlowerTable corsages={prepStats.corsages} bouts={prepStats.bouts} bouquets={prepStats.bouquets}/>
-            <RibbonTable corsages={prepStats.corsages} bouts={prepStats.bouts} bouquets={prepStats.bouquets}/>
+            <RibbonTable items={prepStats.items} corsages={prepStats.corsages} bouts={prepStats.bouts} bouquets={prepStats.bouquets}/>
             <SuppliesTable orderCount={prepStats.orderCount} corsageCount={prepStats.corsageCount} boutCount={prepStats.boutCount} bouquetCount={prepStats.bouquetCount}/>
         </div>
     )
