@@ -4,7 +4,7 @@ import { useContext } from "react";
 function AccentTable({ corsages, bouts }) {
     const { accents } = useContext(AccentContext)
 
-    const accentElements = accents.map(accent => (
+    const accentRows = accents.map(accent => (
         <tr key={accent.id}>
             <td>{accent.color}</td>
             <td>{corsages.filter(c => c.accent?.id === accent.id).length}</td>
@@ -23,7 +23,7 @@ function AccentTable({ corsages, bouts }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {accentElements}
+                    {accentRows}
                 </tbody>
             </table>
         </div>
