@@ -1,6 +1,19 @@
+import { useContext } from "react";
+import { FlowerContext } from "../../context/flower"
 
 
-function FlowerTable() {
+function FlowerTable({ corsages, bouts, bouquets }) {
+    const { flowers } = useContext(FlowerContext)
+
+    const flowerRows = flowers.map(flower => (
+        <tr>
+            <td>{flower.color}</td>
+            <td>{corsages.filter(c => c.flower.id === flower.id).length}</td>
+            <td>{bouts.filter(b => b.flower.id === flower.id).length}</td>
+            <td>{bouquets.filter(b => b.flower.id === flower.id).length}</td>
+        </tr>
+    ))
+
     return (
         <div className="table-container">
             <table>
@@ -14,9 +27,7 @@ function FlowerTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {/* FLOWER COLORS + ISRAELI + ACCENT */}
-                    </tr>
+                    {flowerRows}
                 </tbody>
             </table>
         </div>
