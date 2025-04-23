@@ -9,7 +9,6 @@ function RibbonTable({ items, corsages, bouts, bouquets }) {
             <td>{corsages.filter(c => c.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
             <td>{bouts.filter(b => b.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
             <td>{bouquets.filter(b => b.ribbon_color.toLowerCase() === ribbon.toLowerCase()).length}</td>
-
         </tr>
     ))
 
