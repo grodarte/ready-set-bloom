@@ -1,11 +1,17 @@
 .navbar {
-    background-color: #f8f8f8;
+    background-color: #d9eae2;
     padding: 0.75rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #ddd;
     font-family: sans-serif;
+  }
+  
+  body {
+    background-color: #f9f9f9; /* or try #f7f7f7 or #fafafa for slightly different tones */
+    /* font-family: sans-serif; */
+    color: #333;
   }
   
   .navbar-title {

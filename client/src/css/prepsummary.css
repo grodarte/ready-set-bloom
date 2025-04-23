@@ -1,21 +1,22 @@
 .table-container {
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     padding: 1rem;
+    border: 1px solid #e0e0e0;
   }
   
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.95rem;
-    color: #333;
+    /* color: #333; */
   }
   
   caption {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: .75rem;
     text-align: left;
     color: #222;
   }
@@ -26,12 +27,22 @@
   
   th, td {
     padding: 0.75rem 1rem;
-    text-align: left;
+    text-align: center;
+  }
+
+  tbody tr:hover {
+    background-color: #e9f6f0;
+    transition: background-color 0.2s ease;
   }
   
+  th:first-child, td:first-child {
+    text-align: left;
+  }
+
   tbody tr:not(:last-child) {
     border-bottom: 1px solid #eee;
   }
+
 
   .prep-summary-grid {
     display: grid;
@@ -41,3 +52,10 @@
     margin: 0 auto;
     padding: 2rem;
   }
+
+  .prep-summary-wrapper {
+    background-color: #f9f9f9;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+  }
+  
