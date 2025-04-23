@@ -57,7 +57,7 @@ class Order(db.Model, SerializerMixin):
     # ribbons = association_proxy('items', 'ribbon')
     accents = association_proxy('items', 'accent')
 
-    serialize_rules = ('-event_id', '-event.orders', '-items.order')
+    serialize_rules = ('-event.orders', '-items.order')
 
     @validates('customer')
     def validate_customer(self, key, name):

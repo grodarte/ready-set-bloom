@@ -1,7 +1,7 @@
 
 
 function Item({ item }) {
-    const { id, item_status, order, item_type, wristlet, ribbon_color, flower, accent, special_requests} = item
+    const { id, item_status, order, event, item_type, wristlet, ribbon_color, flower, accent, special_requests} = item
 
     const statusClass = {
         new: "status-new",
