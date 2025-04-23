@@ -23,13 +23,15 @@ function PrepSummary({ events }) {
         const bouquets = items.filter(item => item.item_type === "bouquet")
 
         return {
+            eventOrders: eventOrders,
             orderCount: eventOrders.length,
-            corsageCount: corsages.length,
-            boutCount: bouts.length,
-            bouquetCount: bouquets.length,
+            items: items,
             corsages: corsages,
+            corsageCount: corsages.length,
             bouts: bouts,
+            boutCount: bouts.length,
             bouquets: bouquets,
+            bouquetCount: bouquets.length
         }
     }, [orders])
 
@@ -40,10 +42,10 @@ function PrepSummary({ events }) {
         <div className="prep-summary-grid">
             <OrderOverviewTable orderCount={prepStats.orderCount} corsageCount={prepStats.corsageCount} boutCount={prepStats.boutCount} bouquetCount={prepStats.bouquetCount}/>
             <WristletTable corsages={prepStats.corsages}/>
-            <AccentTable/>
-            <FlowerTable/>
-            <RibbonTable/>
-            <SuppliesTable orderCount={prepStats.orderCount}/>
+            <AccentTable corsages={prepStats.corsages} bouts={prepStats.bouts}/>
+            <FlowerTable corsages={prepStats.corsages} bouts={prepStats.bouts} bouquets={prepStats.bouquets}/>
+            <RibbonTable corsages={prepStats.corsages} bouts={prepStats.bouts} bouquets={prepStats.bouquets}/>
+            <SuppliesTable orderCount={prepStats.orderCount} corsageCount={prepStats.corsageCount} boutCount={prepStats.boutCount} bouquetCount={prepStats.bouquetCount}/>
         </div>
     )
 }
