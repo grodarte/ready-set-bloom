@@ -52,7 +52,7 @@ function NewOrderForm() {
             resetForm()
             setSuccessMsg("Order created successfully!")
             window.scrollTo({ top: 0, behavior: 'smooth' })
-            setTimeout(()=> setSuccessMsg(""), 3000)
+            setTimeout(()=> setSuccessMsg(""), 5000)
         })
         .catch(err => {
             console.error("Error submitting order and items:", err)
@@ -77,7 +77,11 @@ function NewOrderForm() {
             
             {({ values, setFieldValue }) => (
                 <>
-                    {successMsg && <p style={{ color: "green", fontWeight: "bold" }}>{successMsg}</p>}
+                    {successMsg && (
+                        <div className='success-message'>
+                            {successMsg}
+                        </div>
+                    )}
                     <Form className='order-form-container'>
                         <h2 className='order-form-title'>New Order</h2>
 
