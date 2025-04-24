@@ -22,12 +22,33 @@ function NewOrderForm() {
         items: yup.array()
         .of(
             yup.object().shape({
-                item_type: yup.string().typeError("Must select an item type").required('Required').oneOf(["corsage", "boutonniere"]),
-                flower_id: yup.number().typeError("Must select a flower").required('Required'),
-                wristlet_id: yup.number().nullable().when("item_type", {is:"corsage", then: (schema) => schema.typeError("Must select a wristlet").required("Required for corsages"),  otherwise: (schema) => schema.notRequired().nullable(),}),
-                ribbon_color: yup.string().typeError("Must select a ribbon color").required('Required'),
-                accent_id: yup.number().nullable(),
-                special_requests: yup.string()
+                item_type: yup
+                    .string()
+                    .typeError("Must select an item type")
+                    .required('Required')
+                    .oneOf(["corsage", "boutonniere"]),
+                flower_id: yup
+                    .number()
+                    .typeError("Must select a flower")
+                    .required('Required'),
+                wristlet_id: yup
+                    .number()
+                    .nullable()
+                    .when("item_type", {
+                        is:"corsage", 
+                        then: (schema) => schema
+                            .typeError("Must select a wristlet")
+                            .required("Required for corsages"),  
+                        otherwise: (schema) => schema.notRequired().nullable(),}),
+                ribbon_color: yup
+                    .string()
+                    .typeError("Must select a ribbon color")
+                    .required('Required'),
+                accent_id: yup
+                    .number()
+                    .nullable(),
+                special_requests: yup
+                    .string()
             })
         )
         .min(1, "You must add at least one item")

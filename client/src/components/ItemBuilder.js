@@ -32,7 +32,7 @@ function ItemBuilder() {
                     <h3>Add Items</h3>
 
                     {values.items.map((item, index) => {
-                        const isBoutonniere = item.item_type?.toLowerCase() === "boutonniere"
+                        const isCorsage = item.item_type?.toLowerCase() === "corsage"
 
                         return (
                             <div key={index}>
@@ -44,7 +44,7 @@ function ItemBuilder() {
                                         onChange={(e) => {
                                             const value = e.target.value
                                             setFieldValue(`items[${index}].item_type`, value)
-                                            if (value.toLowerCase() === "boutonniere") {
+                                            if (value.toLowerCase() !== "corsage") {
                                                 setFieldValue(`items[${index}].wristlet_id`, "")
                                             }
                                         }}
@@ -52,10 +52,11 @@ function ItemBuilder() {
                                         <option value="">--Select Type--</option>
                                         <option value="corsage">Corsage</option>
                                         <option value="boutonniere">Boutonniere</option>
+                                        <option value="bouquet">Bouquet</option>
                                     </Field>
                                     <ErrorMessage name={`items[${index}].item_type`} component="div" className='error'/>
                                 </div>
-                                {!isBoutonniere && (
+                                {isCorsage && (
                                     <div className='form-group'>
                                         <label htmlFor='wristlet_id'>Wristlet</label>
                                         <Field 

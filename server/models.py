@@ -6,7 +6,7 @@ from config import db
 
 from datetime import datetime
 
-ITEM_TYPES = ['corsage', 'boutonniere']
+ITEM_TYPES = ['corsage', 'boutonniere', 'bouquet']
 ITEM_STATUSES = ['new', 'prepped', 'complete']
 
 class Event(db.Model, SerializerMixin):
@@ -21,7 +21,6 @@ class Event(db.Model, SerializerMixin):
     items = association_proxy('orders', 'items')
     wristlets = association_proxy('orders', 'wristlets')
     flowers = association_proxy('orders', 'flowers')
-    # ribbons = association_proxy('orders', 'ribbons')
     accents = association_proxy('orders', 'accents')
 
     serialize_rules = ('-orders', '-items.order', '-wristlets.items', '-flowers.items', '-accents.items') # removes '-ribbons.items', 
@@ -54,7 +53,6 @@ class Order(db.Model, SerializerMixin):
 
     wristlets = association_proxy('items', 'wristlet')
     flowers = association_proxy('items', 'flower')
-    # ribbons = association_proxy('items', 'ribbon')
     accents = association_proxy('items', 'accent')
 
     serialize_rules = ('-event.orders', '-items.order')
@@ -86,19 +84,16 @@ class Item(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     item_type = db.Column(db.String, nullable=False)
     item_status = db.Column(db.String, default="new")
-    # adds ribbon color as string
     ribbon_color = db.Column(db.String, nullable=False)
     special_requests = db.Column(db.String)
 
     wristlet_id = db.Column(db.Integer, db.ForeignKey('wristlets.id'))
     flower_id = db.Column(db.Integer, db.ForeignKey('flowers.id'), nullable=False)
-    # ribbon_id = db.Column(db.Integer, db.ForeignKey('ribbons.id'), nullable=False)
     accent_id = db.Column(db.Integer, db.ForeignKey('accents.id'))
     order_id = db.Column(db.Integer, db.ForeignKey('orders.id'), nullable=False)
 
     wristlet = db.relationship('Wristlet', uselist=False, back_populates='items')
     flower = db.relationship('Flower', uselist=False, back_populates='items')
-    # ribbon = db.relationship('Ribbon', uselist=False, back_populates='items')
     accent = db.relationship('Accent', uselist=False, back_populates='items')
     order = db.relationship('Order', uselist=False, back_populates='items')
 
