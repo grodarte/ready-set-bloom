@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatWristlet } from "../formatters";
 
 const WristletContext = React.createContext()
 
@@ -8,8 +9,9 @@ function WristletProvider({ children }) {
     useEffect(()=>{
         fetch('/api/wristlets')
         .then(r=>r.json())
-        .then(wrisletData=>{
-            setWristlets(wrisletData)
+        .then(wristletData=>{
+            const formatted = wristletData.map(formatWristlet)
+            setWristlets(formatted)
         })
     }, [])
 

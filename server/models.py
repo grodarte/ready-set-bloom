@@ -23,7 +23,7 @@ class Event(db.Model, SerializerMixin):
     flowers = association_proxy('orders', 'flowers')
     accents = association_proxy('orders', 'accents')
 
-    serialize_rules = ('-orders', '-items.order', '-wristlets.items', '-flowers.items', '-accents.items') # removes '-ribbons.items', 
+    serialize_rules = ('-items.order', '-wristlets.items', '-flowers.items', '-accents.items')
 
     @validates('name')
     def validate_name(self, key, name):
@@ -99,7 +99,7 @@ class Item(db.Model, SerializerMixin):
 
     event = association_proxy('order', 'event')
 
-    serialize_rules = ('-wristlet_id', '-flower_id', '-accent_id', '-order_id', '-order.items', '-wristlet.items', '-flower.items', '-accent.items', '-order.items') #removed '-ribbon_id', '-ribbon.items',
+    serialize_rules = ('-order.items', '-wristlet.items', '-flower.items', '-accent.items', '-order.items')
 
     @validates('item_type')
     def validate_item_type(self, key, item_type):

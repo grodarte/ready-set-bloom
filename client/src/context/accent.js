@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatAccent } from "../formatters";
 
 const AccentContext = React.createContext()
 
@@ -9,7 +10,8 @@ function AccentProvider({ children }) {
         fetch('/api/accents')
         .then(r=>r.json())
         .then(accentData=>{
-            setAccents(accentData)
+            const formatted = accentData.map(formatAccent)
+            setAccents(formatted)
         })
     }, [])
 

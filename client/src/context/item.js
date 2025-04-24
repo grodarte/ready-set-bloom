@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatItem } from "../formatters";
 
 const ItemContext = React.createContext()
 
@@ -9,7 +10,8 @@ function ItemProvider({ children }) {
         fetch('/api/items')
         .then(r=>r.json())
         .then(itemData=>{
-            setItems(itemData)
+            const formatted = itemData.map(formatItem)
+            setItems(formatted)
         })
     }, [])
 

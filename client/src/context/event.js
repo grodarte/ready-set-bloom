@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { formatEvent } from "../formatters";
+
 
 const EventContext = React.createContext()
 
@@ -9,7 +11,8 @@ function EventProvider({ children }) {
         fetch('/api/events')
         .then(r=>r.json())
         .then(eventData=>{
-            setEvents(eventData)
+            const formatted = eventData.map(formatEvent)
+            setEvents(formatted)
         })
     }, [])
 

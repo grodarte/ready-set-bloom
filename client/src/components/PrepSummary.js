@@ -11,17 +11,18 @@ import "../css/prepsummary.css"
 
 function PrepSummary({ events }) {
     const { orders } = useContext(OrderContext)
-
+    
     const eventIDs = events.map(event=>event.id)
-
+    
     const prepStats = useMemo(()=> {
+        if (!events?.length || !orders?.length === 0) return null
         
         const eventOrders = orders.filter(order => eventIDs.includes(order.event_id))
         const items = eventOrders.flatMap(order => order.items)
-        const corsages = items.filter(item => item.item_type === "corsage")
-        const bouts = items.filter(item => item.item_type === "boutonniere")
-        const bouquets = items.filter(item => item.item_type === "bouquet")
-
+        const corsages = items.filter(item => item.item_type.toLowerCase() === "corsage")
+        const bouts = items.filter(item => item.item_type.toLowerCase() === "boutonniere")
+        const bouquets = items.filter(item => item.item_type.toLowerCase() === "bouquet")
+                
         return {
             eventOrders: eventOrders,
             orderCount: eventOrders.length,
@@ -33,11 +34,10 @@ function PrepSummary({ events }) {
             bouquets: bouquets,
             bouquetCount: bouquets.length
         }
-    }, [orders])
+    }, [orders, events])
 
-    console.log(prepStats)
-
-
+    if (!prepStats) return <p>Loading prep summary...</p>
+    
     return (
         <div>
             <div className="prep-summary-grid">

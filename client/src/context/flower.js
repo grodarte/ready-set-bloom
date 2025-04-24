@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatFlower } from "../formatters";
 
 const FlowerContext = React.createContext()
 
@@ -9,7 +10,8 @@ function FlowerProvider({ children }) {
         fetch('/api/flowers')
         .then(r=>r.json())
         .then(flowerData=>{
-            setFlowers(flowerData)
+            const formatted = flowerData.map(formatFlower)
+            setFlowers(formatted)
         })
     }, [])
 

@@ -5,6 +5,7 @@ import { OrderContext } from '../context/order';
 import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
 import ItemBuilder from './ItemBuilder';
+import { formatDate } from '../formatters';
 import "../css/neworderform.css"
 
 function NewOrderForm() {
@@ -26,7 +27,7 @@ function NewOrderForm() {
                     .string()
                     .typeError("Must select an item type")
                     .required('Required')
-                    .oneOf(["corsage", "boutonniere"]),
+                    .oneOf(["corsage", "boutonniere", "bouquet"]),
                 flower_id: yup
                     .number()
                     .typeError("Must select a flower")
@@ -148,7 +149,7 @@ function NewOrderForm() {
                                     <option value="">Select Event</option>
                                     {events.map(event=>(
                                         <option key={event.id} value={event.id}>
-                                            {event.event_date} | {event.name}
+                                            {formatDate(event?.event_date)} | {event.name}
                                         </option>
                                     ))}
                                 </Field>
