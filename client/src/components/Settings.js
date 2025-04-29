@@ -9,7 +9,7 @@ function Settings() {
     const { flowers, setFlowers } = useContext(FlowerContext)
     const { wristlets, setWristlets } = useContext(WristletContext)
     const { accents, setAccents } = useContext(AccentContext)
-    
+
     return (
         <div>
 

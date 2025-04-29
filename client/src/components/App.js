@@ -1,17 +1,23 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
-import ContextProviderWrapper from "../context/ContextProviderWrapper";
+import Settings from "./Settings";
+import { useContext } from "react";
+import { SettingsContext } from "../context/settings";
 
 function App() {
+  const { showSettings } = useContext(SettingsContext)
 
   return (
     <div>
       <header>
         <NavBar/>
       </header>
-      <ContextProviderWrapper>
+
+      {<Settings/>}
+
+      <main>
         <Outlet/>
-      </ContextProviderWrapper>
+      </main>
     </div>
   )
 }
