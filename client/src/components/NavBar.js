@@ -10,6 +10,7 @@ function NavBar() {
                 <NavLink to="/orders" className="nav-link">Orders</NavLink>
                 <NavLink to="/items" className="nav-link">Items</NavLink>
                 <NavLink to="/neworderform" className="nav-link new-order">+ New Order</NavLink>
+                <NavLink to="/settings" className="nav-link">Settings</NavLink>
             </div>
         </nav>
     )

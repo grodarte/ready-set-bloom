@@ -23,7 +23,6 @@ export function formatOrder(order) {
     return {
         ...order,
         phone: formatPhoneNumber(order.phone),
-        event: formatEvent(order.event),
         items: order?.items?.map(item => formatItem(item))
     }
 }

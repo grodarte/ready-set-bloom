@@ -3,6 +3,7 @@ import Dashboard from './components/Dashboard'
 import Orders from './components/Orders'
 import Items from './components/Items'
 import NewOrderForm from './components/NewOrderForm'
+import Settings from './components/Settings'
 
 const routes = [
     {
@@ -24,6 +25,10 @@ const routes = [
             {
                 path: "/neworderform",
                 element: <NewOrderForm/>
+            },
+            {
+                path: "/settings",
+                element: <Settings/>
             }
         ]
     }

@@ -5,7 +5,7 @@ import { OrderContext } from '../context/order';
 import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
 import ItemBuilder from './ItemBuilder';
-import { formatDate } from '../formatters';
+import { formatDate, formatOrder, formatItem } from '../formatters';
 import "../css/neworderform.css"
 
 function NewOrderForm() {
@@ -68,8 +68,10 @@ function NewOrderForm() {
             return r.json()
         })
         .then(newOrderData=> {
-            setOrders(orders=>[...orders, newOrderData.order])
-            setItems(items=>[...items, ...newOrderData.items])
+            const formattedOrder = formatOrder(newOrderData.order)
+            const formattedItems = newOrderData.items.map(item => formatItem(item))
+            setOrders(orders=>[...orders, formattedOrder])
+            setItems(items=>[...items, ...formattedItems])
 
             resetForm()
             setSuccessMsg("Order created successfully!")

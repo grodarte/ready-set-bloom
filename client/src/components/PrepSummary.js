@@ -11,6 +11,8 @@ import "../css/prepsummary.css"
 
 function PrepSummary({ events }) {
     const { orders } = useContext(OrderContext)
+
+    console.log(orders.map(order => order.items?.map(item => item.ribbon_color)))
     
     const eventIDs = events.map(event=>event.id)
     
