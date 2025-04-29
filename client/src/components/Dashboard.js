@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { DateContext } from "../context/DateContext"
 import { formatDate } from "../formatters"
-import PrepSummary from "./PrepSummary"
+import PrepSummary from "./prepsummary/PrepSummary"
 
 function Dashboard() {
     const { thisWeekEvents, upcomingEvents, completedEvents } = useContext(DateContext)

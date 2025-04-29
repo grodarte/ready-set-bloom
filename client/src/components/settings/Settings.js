@@ -1,7 +1,7 @@
-import { EventContext } from "../context/event";
-import { FlowerContext } from "../context/flower";
-import { WristletContext } from "../context/wristlet";
-import { AccentContext } from "../context/accent";
+import { EventContext } from "../../context/event";
+import { FlowerContext } from "../../context/flower";
+import { WristletContext } from "../../context/wristlet";
+import { AccentContext } from "../../context/accent";
 import { useContext } from "react";
 
 function Settings() {
@@ -12,7 +12,7 @@ function Settings() {
 
     return (
         <div>
-
+            
         </div>
     )
 }

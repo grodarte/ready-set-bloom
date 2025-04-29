@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
-import Settings from "./Settings";
+import Settings from "./settings/Settings";
 import { useContext } from "react";
 import { SettingsContext } from "../context/settings";
 

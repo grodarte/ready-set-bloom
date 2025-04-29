@@ -1,18 +1,16 @@
 import { useContext, useMemo } from "react";
-import OrderOverviewTable from "./tables/OrderOverviewTable";
-import WristletTable from "./tables/WristletTable";
-import AccentTable from "./tables/AccentTable";
-import FlowerTable from "./tables/FlowerTable";
-import SuppliesTable from "./tables/SuppliesTable";
-import RibbonTable from "./tables/RibbonTable";
-import { OrderContext } from "../context/order";
-import { ItemContext } from "../context/item"
-import "../css/prepsummary.css"
+import OrderOverviewTable from "./OrderOverviewTable";
+import WristletTable from "./WristletTable";
+import AccentTable from "./AccentTable";
+import FlowerTable from "./FlowerTable";
+import SuppliesTable from "./SuppliesTable";
+import RibbonTable from "./RibbonTable";
+import { OrderContext } from "../../context/order";
+import { ItemContext } from "../../context/item"
+import "../../css/prepsummary.css"
 
 function PrepSummary({ events }) {
     const { orders } = useContext(OrderContext)
-
-    console.log(orders.map(order => order.items?.map(item => item.ribbon_color)))
     
     const eventIDs = events.map(event=>event.id)
     
