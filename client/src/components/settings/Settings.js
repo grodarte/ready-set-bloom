@@ -16,8 +16,10 @@ function Settings() {
 
     return (
         <div className="settings-panel">
-            <h2>⚙ Settings</h2>
-            <button className="close-button" onClick={() => setShowSettings(false)}>X</button>
+            <div className="settings-header">
+                <h2>⚙ Settings</h2>
+                <button className="close-button" onClick={() => setShowSettings(false)}>X</button>
+            </div>
             {showSections ? 
                 <>
                     <button 
