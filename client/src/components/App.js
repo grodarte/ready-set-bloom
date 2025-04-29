@@ -13,7 +13,7 @@ function App() {
         <NavBar/>
       </header>
 
-      {<Settings/>}
+      {showSettings ? <Settings/> : null}
 
       <main>
         <Outlet/>

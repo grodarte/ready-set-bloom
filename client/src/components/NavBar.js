@@ -14,7 +14,7 @@ function NavBar() {
                 <NavLink to="/orders" className="nav-link">Orders</NavLink>
                 <NavLink to="/items" className="nav-link">Items</NavLink>
                 <NavLink to="/neworderform" className="nav-link new-order">+ New Order</NavLink>
-                {showSettings ? null : <button onClick={() => setShowSettings(true)}>Settings</button>}
+                {showSettings ? null : <button onClick={() => setShowSettings(true)}>⚙</button>}
             </div>
         </nav>
     )
