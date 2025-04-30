@@ -1,10 +1,13 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FlowerContext } from "../../context/flower";
+import { formatFlower } from "../../formatters";
 
 function FlowerForm() {
     const { flowers, setFlowers } = useContext(FlowerContext);
+    const [successMsg, setSuccessMsg] = useState("")
+    
 
     const flowerSchema = yup.object().shape({
         name: yup.string().required("Flower name is required"),
@@ -24,8 +27,12 @@ function FlowerForm() {
                 return r.json();
             })
             .then((newFlower) => {
-                setFlowers([...flowers, newFlower]);
+                const formatted = formatFlower(newFlower)
+                setFlowers([...flowers, formatted]);
                 resetForm();
+                setSuccessMsg("Flower created successfully!")
+                window.scrollTo({ top: 0, behavior:'smooth' })
+                setTimeout(()=> setSuccessMsg(""), 5000)
             })
             .catch((err) => console.error("Error adding flower:", err));
     }
@@ -38,19 +45,26 @@ function FlowerForm() {
                 validationSchema={flowerSchema}
                 onSubmit={handleSubmit}
             >
-                <Form>
-                    <div>
-                        <label htmlFor="name">Name</label>
-                        <Field name="name" />
-                        <ErrorMessage name="name" component="div" className="error" />
-                    </div>
-                    <div>
-                        <label htmlFor="color">Color</label>
-                        <Field name="color" />
-                        <ErrorMessage name="color" component="div" className="error" />
-                    </div>
-                    <button type="submit">Add Flower</button>
-                </Form>
+                <>
+                    {successMsg && (
+                        <div className="success-message">
+                            {successMsg}
+                        </div>
+                    )}
+                    <Form>
+                        <div>
+                            <label htmlFor="name">Name</label>
+                            <Field name="name" />
+                            <ErrorMessage name="name" component="div" className="error" />
+                        </div>
+                        <div>
+                            <label htmlFor="color">Color</label>
+                            <Field name="color" />
+                            <ErrorMessage name="color" component="div" className="error" />
+                        </div>
+                        <button type="submit">Add Flower</button>
+                    </Form>
+                </>
             </Formik>
         </div>
     );
