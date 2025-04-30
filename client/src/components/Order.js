@@ -1,11 +1,7 @@
 import { formatPhoneNumber, formatDate } from "../formatters"
 
-function Order({ order }) {
+function Order({ order, onDeleteOrder }) {
     const { id, customer, phone, address, delivery_details, event, items } = order
-
-    function handleDelete(){
-        
-    }
 
     return (
         <tr>
@@ -16,7 +12,7 @@ function Order({ order }) {
             <td>{delivery_details}</td>
             <td>
                 <button className="edit-btn">Edit</button>
-                <button className="delete-btn">Delete</button>
+                <button className="delete-btn" onClick={() => onDeleteOrder(id)}>Delete</button>
             </td>
         </tr>
     )

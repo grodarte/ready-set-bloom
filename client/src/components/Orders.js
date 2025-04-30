@@ -4,10 +4,10 @@ import Order from "./Order"
 import "../css/orders.css"
 
 function Orders() {
-    const { orders } = useContext(OrderContext)
+    const { orders, setOrders } = useContext(OrderContext)
 
     const orderElements = orders.map(order=>{
-        return <Order key={order.id} order={order}/>
+        return <Order key={order.id} order={order} onDeleteOrder={handleDelete}/>
     })
 
     function handleEdit(order) {
@@ -18,6 +18,14 @@ function Orders() {
     function handleDelete(id) {
         // fetch - delete order by id
         console.log(id)
+        fetch(`/api/orders/${id}`, {
+            method: 'DELETE'
+        })
+        .then(r => {
+            if(r.ok) {
+                setOrders(orders => orders.filter(order => order.id !== id))
+            }
+        })
     }
 
     return (
