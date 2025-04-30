@@ -14,7 +14,7 @@ function EventProvider({ children }) {
             const formatted = eventData.map(formatEvent)
             setEvents(formatted)
         })
-    }, [])
+    }, [events])
 
     return (
         <EventContext.Provider value={{events, setEvents}}>

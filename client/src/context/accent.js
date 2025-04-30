@@ -13,7 +13,7 @@ function AccentProvider({ children }) {
             const formatted = accentData.map(formatAccent)
             setAccents(formatted)
         })
-    }, [])
+    }, [accents])
 
     return (
         <AccentContext.Provider value={{accents, setAccents}}>
