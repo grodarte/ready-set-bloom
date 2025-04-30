@@ -1,4 +1,5 @@
 import { SettingsProvider } from "./settings";
+import { OrderPanelProvider } from "./orderpanel";
 import { EventProvider } from "../context/event";
 import { OrderProvider } from "./order";
 import { ItemProvider } from "./item";
@@ -9,23 +10,25 @@ import { DateProvider } from "./DateContext";
 
 function ContextProviderWrapper({ children }) {
     return (
-        <SettingsProvider>
-            <EventProvider>
-                <OrderProvider>
-                    <ItemProvider>
-                        <WristletProvider>
-                            <FlowerProvider>
-                                <AccentProvider>
-                                    <DateProvider>
-                                        {children}
-                                    </DateProvider>
-                                </AccentProvider>
-                            </FlowerProvider>
-                        </WristletProvider>
-                    </ItemProvider>
-                </OrderProvider>
-            </EventProvider>
-        </SettingsProvider>
+        <OrderPanelProvider>
+            <SettingsProvider>
+                <EventProvider>
+                    <OrderProvider>
+                        <ItemProvider>
+                            <WristletProvider>
+                                <FlowerProvider>
+                                    <AccentProvider>
+                                        <DateProvider>
+                                            {children}
+                                        </DateProvider>
+                                    </AccentProvider>
+                                </FlowerProvider>
+                            </WristletProvider>
+                        </ItemProvider>
+                    </OrderProvider>
+                </EventProvider>
+            </SettingsProvider>
+        </OrderPanelProvider>
     )
 }
 

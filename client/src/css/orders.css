@@ -65,3 +65,16 @@
 .delete-btn:hover {
   background-color: #d17878;
 }
+
+.icon-row {
+  display: flex !important;
+  gap: 1px; /* adjust spacing between icons */
+  align-items: center;
+}
+
+.icon-small {
+  width: 40px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
+}

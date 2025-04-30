@@ -35,6 +35,7 @@ function Orders() {
                 <thead>
                     <tr>
                         <th>Event Date</th>
+                        <th>Items</th>
                         <th>Customer</th>
                         <th>Phone</th>
                         <th>Address</th>
