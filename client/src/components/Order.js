@@ -3,6 +3,10 @@ import { formatPhoneNumber, formatDate } from "../formatters"
 function Order({ order }) {
     const { id, customer, phone, address, delivery_details, event, items } = order
 
+    function handleDelete(){
+        
+    }
+
     return (
         <tr>
             <td>{formatDate(event.event_date)}</td>
