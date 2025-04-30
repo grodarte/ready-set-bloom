@@ -143,6 +143,32 @@ class ItemByID(Resource):
 
         return item.to_dict(), 200
 
+class OrderByID(Resource):
+
+    def get(self, id):
+        order_dict = Order.query.filter_by(id=id).first().to_dict()
+        return order_dict, 200
+
+    def patch(self, id):
+        order = Order.query.filter_by(id=id).first()
+        json = request.get_json()
+        for attr, value in json.items():
+            setattr(item, attr, value)
+
+        db.session.add(item)
+        db.session.commit()
+
+        return order.to_dict(), 200
+
+    def delete(self, id):
+        order = Order.query.filter_by(id=id).first()
+        if order:
+            db.session.delete(order)
+            db.session.commit()
+        
+            return "", 204
+        return {"error": "Order not found"}, 404
+
 class WristletResource(Resource):
 
     def get(self):
@@ -201,6 +227,7 @@ api.add_resource(OrderResource, '/api/orders')
 api.add_resource(ItemResource, '/api/items')
 api.add_resource(FullOrderResource, '/api/orders/full')
 api.add_resource(ItemByID, '/api/items/<int:id>')
+api.add_resource(OrderByID, 'api/orders/<int:id>')
 api.add_resource(WristletResource, '/api/wristlets')
 api.add_resource(FlowerResource, '/api/flowers')
 api.add_resource(AccentResource, '/api/accents')
