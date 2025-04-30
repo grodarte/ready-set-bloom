@@ -8,13 +8,21 @@ function NavBar() {
 
     return (
         <nav className="navbar">
-            <h1 className="navbar-title">Ready Set Bloom</h1>
-            <div className="navbar-links">
-                <NavLink to="/" className="nav-link">Dashboard</NavLink>
-                <NavLink to="/orders" className="nav-link">Orders</NavLink>
-                <NavLink to="/items" className="nav-link">Items</NavLink>
-                <NavLink to="/neworderform" className="nav-link new-order">+ New Order</NavLink>
-                {showSettings ? null : <button onClick={() => setShowSettings(true)}>⚙</button>}
+            <div className="nav-left">
+                <div className="nav-logo">❀ Ready Set Bloom</div>
+                <div className="nav-links">
+                    <NavLink to="/" className="nav-link">Dashboard</NavLink>
+                    <NavLink to="/orders" className="nav-link">Orders</NavLink>
+                    <NavLink to="/items" className="nav-link">Items</NavLink>
+                </div>
+
+            </div>
+            <div className="nav-actions">
+                <NavLink to="/neworderform">
+                    <button className="new-order-btn">+ New Order</button>
+                </NavLink>
+                <button className="settings-button" onClick={() => setShowSettings(true)}>⚙</button>
+
             </div>
         </nav>
     )

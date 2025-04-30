@@ -1,4 +1,4 @@
-.navbar {
+/* .navbar {
     background-color: #d9eae2;
     padding: 0.75rem 1.5rem;
     display: flex;
@@ -9,8 +9,7 @@
   }
   
   body {
-    background-color: #f9f9f9; /* or try #f7f7f7 or #fafafa for slightly different tones */
-    /* font-family: sans-serif; */
+    background-color: #f9f9f9;
     color: #333;
   }
   
@@ -52,4 +51,105 @@
   
   .new-order:hover {
     background-color: #45a049;
+  } */
+
+  nav {
+    background-color: #f4eee8; /* soft tan */
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Georgia', serif; /* clean, serifed floral feel */
+    color: #5a3e36; /* warm brown */
+    border-bottom: 1px solid #d4ccc3;
   }
+  
+  nav a {
+    color: #5a3e36;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  nav a.active:not(.new-order-btn) {
+    font-weight: 600;
+    border-bottom: 2px solid #5a3e36;
+  }
+  
+  nav a:hover {
+    color: #3e2a22; /* even darker brown on hover */
+    border-bottom: 2px solid #5a3e36;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f4eee8; /* soft tan */
+    padding: 1rem 2rem;
+    font-family: 'Georgia', serif;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.5rem;
+    color: #412c26;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1rem;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+    color: #412c26;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .nav-link.active {
+    border-bottom: 2px solid #412c26;
+  }
+  
+  .nav-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .new-order-btn {
+    background-color: #5a3e36; /* dark brown */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  
+  .new-order-btn:hover {
+    background-color: #4b322b;
+  }
+  
+  .settings-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem; /* adjust size here */
+    cursor: pointer;
+    padding: 0 0.5rem;
+    line-height: 1;
+    color: #412c26;
+    transition: color 0.2s ease;
+  }
+  
+  .settings-button:hover {
+    color: #5a3e36; /* dark brown on hover */
+  }
+  

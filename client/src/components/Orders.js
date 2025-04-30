@@ -10,6 +10,16 @@ function Orders() {
         return <Order key={order.id} order={order}/>
     })
 
+    function handleEdit(order) {
+        // side panel logic ?
+        console.log("Edit order: ", order)
+    }
+
+    function handleDelete(id) {
+        // fetch - delete order by id
+        console.log(id)
+    }
+
     return (
         <div className="orders-container">
             <h1 className="orders-heading">Orders</h1>
@@ -21,6 +31,8 @@ function Orders() {
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Delivery Details</th>
+                        <th style={{ color: '#aaa', fontWeight: 'normal' }}>⋯</th>
+
                     </tr>
                 </thead>
                 <tbody>

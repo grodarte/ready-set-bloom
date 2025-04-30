@@ -1,10 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { EventContext } from '../../context/event';
 
 function EventForm() {
     const { events, setEvents } = useContext(EventContext);
+    const [successMsg, setSuccessMsg] = useState("")
 
     const initialValues = {
         name: '',
@@ -28,6 +29,9 @@ function EventForm() {
             .then(newEvent => {
                 setEvents(prev => [...prev, newEvent]);
                 resetForm();
+                setSuccessMsg("Event created successfully!")
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+                setTimeout(()=>setSuccessMsg(""), 5000)
             })
             .catch(err => console.error('Error creating event:', err));
     }
@@ -40,19 +44,26 @@ function EventForm() {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                <Form>
-                    <div>
-                        <label htmlFor="name">Name</label>
-                        <Field name="name" />
-                        <ErrorMessage name="name" component="div" className="error" />
-                    </div>
-                    <div>
-                        <label htmlFor="event_date">Date</label>
-                        <Field name="event_date" type="date" />
-                        <ErrorMessage name="event_date" component="div" className="error" />
-                    </div>
-                    <button type="submit">Add Event</button>
-                </Form>
+                <>
+                    {successMsg && (
+                            <div className='success-message'>
+                                {successMsg}
+                            </div>
+                        )}
+                    <Form>
+                        <div>
+                            <label htmlFor="name">Name</label>
+                            <Field name="name" />
+                            <ErrorMessage name="name" component="div" className="error" />
+                        </div>
+                        <div>
+                            <label htmlFor="event_date">Date</label>
+                            <Field name="event_date" type="date" />
+                            <ErrorMessage name="event_date" component="div" className="error" />
+                        </div>
+                        <button type="submit">Add Event</button>
+                    </Form>
+                </>
             </Formik>
         </div>
     );

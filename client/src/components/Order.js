@@ -10,6 +10,10 @@ function Order({ order }) {
             <td>{formatPhoneNumber(phone)}</td>
             <td>{address}</td>
             <td>{delivery_details}</td>
+            <td>
+                <button className="edit-btn">Edit</button>
+                <button className="delete-btn">Delete</button>
+            </td>
         </tr>
     )
 }
