@@ -13,12 +13,29 @@ function Settings() {
     const [showFlowerForm, setShowFlowerForm] = useState(false)
     const [showWristletForm, setShowWristletForm] = useState(false)
     const [showAccentForm, setShowAccentForm] = useState(false)
+    const [successMsg, setSuccessMsg] = useState("")
+
+    function handleSuccessMsg(msg){
+        setSuccessMsg(msg)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        setShowSections(true)
+        setShowEventForm(false)
+        setShowFlowerForm(false)
+        setShowWristletForm(false)
+        setShowAccentForm(false)
+        setTimeout(()=> setSuccessMsg(""), 5000)
+    }
 
     return (
         <div className="settings-panel">
             <div className="settings-header">
                 <h2>⚙ Settings</h2>
                 <button className="close-button" onClick={() => setShowSettings(false)}>X</button>
+                {successMsg && (
+                    <div className="success-message">
+                        {successMsg}
+                    </div>
+                )}
             </div>
             {showSections ? 
                 <>
@@ -69,10 +86,10 @@ function Settings() {
                     >
                         ⬅ Back
                     </button>
-                    {showEventForm ? <EventForm/> : null}
-                    {showFlowerForm ? <FlowerForm/> : null}
-                    {showWristletForm ? <WristletForm/> : null}
-                    {showAccentForm ? <AccentForm/> : null}
+                    {showEventForm ? <EventForm onSuccessMsg={handleSuccessMsg}/> : null}
+                    {showFlowerForm ? <FlowerForm onSuccessMsg={handleSuccessMsg}/> : null}
+                    {showWristletForm ? <WristletForm onSuccessMsg={handleSuccessMsg}/> : null}
+                    {showAccentForm ? <AccentForm onSuccessMsg={handleSuccessMsg}/> : null}
                 </>
             }
 

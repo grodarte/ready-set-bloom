@@ -209,7 +209,6 @@ class Accent(db.Model, SerializerMixin):
     @validates('color')
     def validate_color(self, key, color):
         color = color.lower().strip()
-        allowed = ['gold', 'silver', 'black']
-        if color not in allowed:
+        if not color:
             raise ValueError("Color must be provided.")
         return color

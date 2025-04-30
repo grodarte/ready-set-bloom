@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { WristletContext } from "../../context/wristlet";
+import { formatWristlet } from "../../formatters";
 
-function WristletForm() {
+function WristletForm({ onSuccessMsg }) {
     const { wristlets, setWristlets } = useContext(WristletContext);
 
     const initialValues = {
@@ -29,8 +30,10 @@ function WristletForm() {
             return r.json();
         })
         .then(newWristlet => {
-            setWristlets(wristlets => [...wristlets, newWristlet]);
+            const formatted = formatWristlet(newWristlet)
+            setWristlets(prev => [...prev, formatted]);
             resetForm();
+            onSuccessMsg("Wristlet created successfully!")
         })
         .catch(err => console.error("Error creating wristlet:", err));
     }

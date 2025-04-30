@@ -1,15 +1,32 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { formatAccent } from '../../formatters';
+import { useContext } from 'react';
+import { AccentContext } from '../../context/accent';
 
-function AccentForm() {
+function AccentForm({ onSuccessMsg }) {
+    const { setAccents } = useContext(AccentContext)
+
     const accentSchema = yup.object().shape({
         color: yup.string().required('Color is required')
     });
 
     function handleSubmit(values, { resetForm }) {
-        console.log("Submitting accent:", values);
-        // Insert fetch POST request here
-        resetForm();
+        fetch('/api/accents', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        })
+        .then(r => r.json())
+        .then(newAccent => {
+            const formatted = formatAccent(newAccent)
+            setAccents(prev => [...prev, formatted])
+            resetForm()
+            onSuccessMsg("Accent created successfully!")
+        })
+        .catch(err => console.error("Error creating wristlet:", err));
     }
 
     return (
