@@ -4,7 +4,7 @@ const OrderPanelContext = React.createContext()
 
 function OrderPanelProvider({ children }) {
     const [showOrderPanel, setShowOrderPanel] = useState(false)
-    const [selectedOrderId, setSelectedOrderId] = useState({})
+    const [selectedOrderId, setSelectedOrderId] = useState(null)  
 
     return (
         <OrderPanelContext.Provider value={{showOrderPanel, setShowOrderPanel, selectedOrderId, setSelectedOrderId}}>

@@ -1,6 +1,9 @@
+import { useContext } from "react"
 import { formatPhoneNumber, formatDate } from "../formatters"
+import { OrderPanelContext } from "../context/orderpanel"
 
 function Order({ order, onDeleteOrder }) {
+    const { setShowOrderPanel, setSelectedOrderId } = useContext(OrderPanelContext)
     const { id, customer, phone, address, delivery_details, event, items } = order
 
     const itemImages = items.map(item => {
@@ -8,7 +11,7 @@ function Order({ order, onDeleteOrder }) {
     })
 
     return (
-        <tr>
+        <tr onClick={() => {setShowOrderPanel(true); setSelectedOrderId(id)}}>
             <td>{formatDate(event.event_date)}</td>
             <td>
                 <div className="icon-row">
@@ -19,10 +22,10 @@ function Order({ order, onDeleteOrder }) {
             <td>{formatPhoneNumber(phone)}</td>
             <td>{address}</td>
             <td>{delivery_details}</td>
-            <td>
+            {/* <td>
                 <button className="edit-btn">Edit</button>
                 <button className="delete-btn" onClick={() => onDeleteOrder(id)}>Delete</button>
-            </td>
+            </td> */}
         </tr>
     )
 }

@@ -40,7 +40,7 @@ function Orders() {
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Delivery Details</th>
-                        <th style={{ color: '#aaa', fontWeight: 'normal' }}>⋯</th>
+                        {/* <th style={{ color: '#aaa', fontWeight: 'normal' }}>⋯</th> */}
 
                     </tr>
                 </thead>
