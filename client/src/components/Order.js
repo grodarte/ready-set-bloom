@@ -3,7 +3,7 @@ import { formatPhoneNumber, formatDate } from "../formatters"
 import { OrderPanelContext } from "../context/orderpanel"
 
 function Order({ order, onDeleteOrder }) {
-    const { setShowOrderPanel, setSelectedOrderId } = useContext(OrderPanelContext)
+    const { setSelectedOrderId } = useContext(OrderPanelContext)
     const { id, customer, phone, address, delivery_details, event, items } = order
 
     const itemImages = items.map(item => {
@@ -11,7 +11,7 @@ function Order({ order, onDeleteOrder }) {
     })
 
     return (
-        <tr onClick={() => {setShowOrderPanel(true); setSelectedOrderId(id)}}>
+        <tr onClick={() => {setSelectedOrderId(id)}}>
             <td>{formatDate(event.event_date)}</td>
             <td>
                 <div className="icon-row">

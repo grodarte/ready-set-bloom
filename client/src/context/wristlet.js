@@ -13,7 +13,7 @@ function WristletProvider({ children }) {
             const formatted = wristletData.map(formatWristlet)
             setWristlets(formatted)
         })
-    }, [wristlets])
+    }, [])
 
     return (
         <WristletContext.Provider value={{wristlets, setWristlets}}>

@@ -13,7 +13,7 @@ function OrderProvider({ children }) {
             const formatted = orderData.map(formatOrder)
             setOrders(formatted)
         })
-    }, [orders])
+    }, [])
 
     return (
         <OrderContext.Provider value={{orders, setOrders}}>

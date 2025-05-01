@@ -3,11 +3,11 @@ import React, { useState } from "react";
 const OrderPanelContext = React.createContext()
 
 function OrderPanelProvider({ children }) {
-    const [showOrderPanel, setShowOrderPanel] = useState(false)
+    // const [showOrderPanel, setShowOrderPanel] = useState(false)
     const [selectedOrderId, setSelectedOrderId] = useState(null)  
 
     return (
-        <OrderPanelContext.Provider value={{showOrderPanel, setShowOrderPanel, selectedOrderId, setSelectedOrderId}}>
+        <OrderPanelContext.Provider value={{selectedOrderId, setSelectedOrderId}}>
             {children}
         </OrderPanelContext.Provider>
     )

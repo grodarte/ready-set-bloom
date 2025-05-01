@@ -13,7 +13,7 @@ function FlowerProvider({ children }) {
             const formatted = flowerData.map(formatFlower)
             setFlowers(formatted)
         })
-    }, [flowers])
+    }, [])
 
     return (
         <FlowerContext.Provider value={{flowers, setFlowers}}>

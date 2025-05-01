@@ -13,7 +13,7 @@ function ItemProvider({ children }) {
             const formatted = itemData.map(formatItem)
             setItems(formatted)
         })
-    }, [items])
+    }, [])
 
     return (
         <ItemContext.Provider value={{items, setItems}}>

@@ -26,7 +26,7 @@ function FlowerForm({ onSuccessMsg}) {
             })
             .then((newFlower) => {
                 const formatted = formatFlower(newFlower)
-                setFlowers([...flowers, formatted]);
+                setFlowers(prev => [...prev, formatted]);
                 resetForm();
                 onSuccessMsg("Flower created successfully!")
             })

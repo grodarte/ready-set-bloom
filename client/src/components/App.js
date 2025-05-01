@@ -8,7 +8,7 @@ import OrderPanel from "./OrderPanel";
 
 function App() {
   const { showSettings } = useContext(SettingsContext)
-  const { showOrderPanel } = useContext(OrderPanelContext)
+  const { selectedOrderId } = useContext(OrderPanelContext)
 
   return (
     <div>
@@ -17,7 +17,7 @@ function App() {
       </header>
 
       {showSettings ? <Settings/> : null}
-      {showOrderPanel ? <OrderPanel/> : null}
+      {selectedOrderId ? <OrderPanel/> : null}
 
       <main>
         <Outlet/>
