@@ -1,7 +1,10 @@
+import { useContext } from "react"
 import { formatDate } from "../formatters"
+import { OrderPanelContext } from "../context/orderpanel"
 
 function Item({ item }) {
     const { id, item_status, order, event, item_type, wristlet, ribbon_color, flower, accent, special_requests} = item
+    const { setSelectedOrderId} = useContext(OrderPanelContext)
 
     const statusClass = {
         new: "status-new",
@@ -10,7 +13,7 @@ function Item({ item }) {
     }[item_status?.toLowerCase()] || ""
 
     return (
-        <tr>
+        <tr onClick={() => setSelectedOrderId(order.id)}>
             <td>{formatDate(order?.event?.event_date)}</td>
             <td className={statusClass}>{item_status}</td>
             <td>{order?.customer}</td>
