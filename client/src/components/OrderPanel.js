@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { OrderPanelContext } from "../context/orderpanel"
 import "../css/orderpanel.css"
 import { OrderContext } from "../context/order"
+import ItemPanel from "./ItemPanel"
 
 
 function OrderPanel() {
@@ -12,6 +13,8 @@ function OrderPanel() {
     function statusUpdate() {
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
     }
+
+    const itemElements = items.map(item => <ItemPanel key={item.id} item={item}/>)
     
     return (
         <div className="order-panel">
@@ -49,7 +52,8 @@ function OrderPanel() {
                 </table>
             </div>
             <div>
-                {/* {item rendering} */}
+                <h3>{`Items (${items.length})`}</h3>
+                {itemElements}
             </div>
         </div>
     )
