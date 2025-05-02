@@ -2,7 +2,7 @@ import EventForm from "./EventForm"
 import FlowerForm from "./FlowerForm"
 import WristletForm from "./WristletForm"
 import AccentForm from "./AccentForm"
-import "../../css/settings.css"
+import "../../styles/settings.css"
 import { useContext, useState } from "react"
 import { SettingsContext } from "../../context/settings"
 

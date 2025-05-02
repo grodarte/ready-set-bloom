@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { OrderContext } from "../context/order"
 import Order from "./Order"
-import "../css/orders.css"
+import "../styles/orders.css"
 
 function Orders() {
     const { orders, setOrders } = useContext(OrderContext)

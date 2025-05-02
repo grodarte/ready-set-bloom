@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ItemContext } from "../context/item";
 import Item from "./Item";
-import "../css/items.css";
+import "../styles/items.css";
 
 function Items() {
     const { items } = useContext(ItemContext)

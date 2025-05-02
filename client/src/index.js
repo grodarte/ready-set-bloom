@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter , RouterProvider } from 'react-router-dom';
-import "./css/index.css";
+import "./styles/index.css";
 import routes from './routes';
 import ContextProviderWrapper from "./context/ContextProviderWrapper";
 

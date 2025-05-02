@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { OrderPanelContext } from "../context/orderpanel"
-import "../css/orderpanel.css"
+import "../styles/orderpanel.css"
 import { OrderContext } from "../context/order"
 import ItemPanel from "./ItemPanel"
 
@@ -24,7 +24,7 @@ function OrderPanel() {
                 <h2>{customer}</h2>
                 <h3>Delivery Details</h3>
                 <span>Due <span>{event.event_date}</span></span>
-                <table>
+                <table className="order-info-table">
                     <tbody>
                         <tr>
                             <td className="label">Customer</td>

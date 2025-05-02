@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import "../css/navbar.css";
+import "../styles/navbar.css";
 import { useContext } from "react";
 import { SettingsContext } from "../context/settings"
 

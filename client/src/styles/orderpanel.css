@@ -23,3 +23,21 @@
         transform: translateX(0);
     }
 }
+
+.order-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .order-info-table td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: top;
+  }
+  
+  .order-info-table .label {
+    font-weight: 600;
+    width: 120px;
+    white-space: nowrap;
+  }

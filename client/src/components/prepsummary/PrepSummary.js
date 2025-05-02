@@ -7,7 +7,7 @@ import SuppliesTable from "./SuppliesTable";
 import RibbonTable from "./RibbonTable";
 import { OrderContext } from "../../context/order";
 import { ItemContext } from "../../context/item"
-import "../../css/prepsummary.css"
+import "../../styles/prepsummary.css"
 
 function PrepSummary({ events }) {
     const { orders } = useContext(OrderContext)

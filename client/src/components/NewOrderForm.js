@@ -6,7 +6,7 @@ import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
 import ItemBuilder from './ItemBuilder';
 import { formatDate, formatOrder, formatItem } from '../formatters';
-import "../css/neworderform.css"
+import "../styles/neworderform.css"
 
 function NewOrderForm() {
     const { orders, setOrders } = useContext(OrderContext)
