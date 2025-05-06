@@ -7,7 +7,7 @@ import { DateContext } from "../context/DateContext"
 
 function Orders() {
     const { orders, setOrders } = useContext(OrderContext)
-    const { thisWeekEvents } = useContext(DateContext)
+    const { startOfWeek, endOfWeek, startOfNextWeek, endOfNextWeek } = useContext(DateContext)
     const [filter, setFilter] = useState("this_week")
 
     const filteredOrders = orders.filter(order => {
@@ -15,11 +15,12 @@ function Orders() {
         if (filter === 'active') return order.status !== "completed"
         if (filter === 'completed') return order.status === 'completed'
         if (filter === 'this_week') {
-
+            const orderDate = new Date(order.event.event_date)
+            return orderDate >= startOfWeek && orderDate <= endOfWeek
         }
     })
 
-    const orderElements = orders.map(order=>{
+    const orderElements = filteredOrders.map(order=>{
         return <Order key={order.id} order={order} onDeleteOrder={handleDelete}/>
     })
 
