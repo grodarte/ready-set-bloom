@@ -7,7 +7,7 @@ import { DateContext } from "../context/DateContext"
 
 function Orders() {
     const { orders, setOrders } = useContext(OrderContext)
-    const { startOfWeek, endOfWeek, startOfNextWeek, endOfNextWeek } = useContext(DateContext)
+    const { startOfWeek, endOfWeek } = useContext(DateContext)
     const [filter, setFilter] = useState("this_week")
 
     const filteredOrders = orders.filter(order => {

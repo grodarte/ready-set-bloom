@@ -15,12 +15,12 @@ function Dashboard() {
 
     const upcomingEvents = events.filter(event=>{
         const eventDate = new Date(event.event_date)
-        return eventDate > endOfWeek
+        return eventDate > endOfNextWeek
     })
 
-    const completedEvents = events.filter(event=>{
+    const nextWeekEvents = events.filter(event=>{
         const eventDate = new Date(event.event_date)
-        return eventDate < startOfWeek
+        return eventDate >= startOfNextWeek && eventDate <= endOfNextWeek
     })
 
     return (
@@ -35,13 +35,13 @@ function Dashboard() {
                 ))
             }
             <PrepSummary events={thisWeekEvents}/>
+            <h2>Next Week</h2>
+            {
+                nextWeekEvents.length === 0 ? <h3>No completed events.</h3> : nextWeekEvents.map(event => <li key={event.id}>{formatDate(event?.event_date)} | {event.name}</li>)
+            }
             <h2>Upcoming Events</h2>
             {
                 upcomingEvents.length === 0 ? <h3>No upcoming events.</h3> : upcomingEvents.map(event => <li key={event.id}>{formatDate(event?.event_date)} | {event.name}</li>)
-            }
-            <h2>Completed Events</h2>
-            {
-                completedEvents.length === 0 ? <h3>No completed events.</h3> : completedEvents.map(event => <li key={event.id}>{formatDate(event?.event_date)} | {event.name}</li>)
             }
 
         </div>

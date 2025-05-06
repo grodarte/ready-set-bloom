@@ -7,7 +7,7 @@ import "../styles/items.css";
 
 function Items() {
     const { items } = useContext(ItemContext)
-    const { startOfWeek, endOfWeek, startOfNextWeek, endOfNextWeek } = useContext(DateContext)
+    const { startOfWeek, endOfWeek } = useContext(DateContext)
     const [filter, setFilter] = useState("this_week")
 
     const filteredItems = items.filter(item => {
