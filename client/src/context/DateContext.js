@@ -4,37 +4,29 @@ import { EventContext } from "./event"
 const DateContext = React.createContext()
 
 function DateProvider({ children }) {
-    const [today, setToday] = useState(new Date())
-    const [endOfWeek, setEndOfWeek] = useState('')
-    const { events } = useContext(EventContext)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
 
-    useEffect(()=>{
-        const now = new Date()
-        setToday(now)
+    const startOfWeek = new Date(today)
+    const day = today.getDay()
+    const daysSinceMonday = (day === 0) ? 6 : day - 1
+    startOfWeek.setDate(today.getDate() - daysSinceMonday)
+    startOfWeek.setHours(0, 0, 0, 0)
 
-        const weekEnd = new Date(now)
-        weekEnd.setDate(now.getDate() + (7 - now.getDay()))
-        setEndOfWeek(weekEnd)
-        }, [events])
+    const endOfWeek = new Date(startOfWeek)
+    endOfWeek.setDate(startOfWeek.getDate() + 6)
+    endOfWeek.setHours(23, 59, 59, 999)
 
-    // need to get events for this week and events upcoming
-    const thisWeekEvents = events.filter(event=>{
-        const eventDate = new Date(event.event_date)
-        return eventDate <= endOfWeek && eventDate >= today
-    })
+    const startOfNextWeek = new Date(startOfWeek)
+    startOfNextWeek.setDate(startOfWeek.getDate() + 7)
+    startOfNextWeek.setHours(0, 0, 0, 0)
 
-    const upcomingEvents = events.filter(event=>{
-        const eventDate = new Date(event.event_date)
-        return eventDate > endOfWeek
-    })
-
-    const completedEvents = events.filter(event=>{
-        const eventDate = new Date(event.event_date)
-        return eventDate < today
-    })
+    const endOfNextWeek = new Date(startOfNextWeek)
+    endOfNextWeek.setDate(startOfNextWeek.getDate() + 6)
+    endOfNextWeek.setHours(23, 59, 59, 999)
 
     return (
-        <DateContext.Provider value={{ thisWeekEvents, upcomingEvents, completedEvents }}>
+        <DateContext.Provider value={{ today, startOfWeek, endOfWeek, startOfNextWeek, endOfNextWeek }}>
             {children}
         </DateContext.Provider>
     )

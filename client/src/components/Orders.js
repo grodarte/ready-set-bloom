@@ -1,10 +1,23 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { OrderContext } from "../context/order"
 import Order from "./Order"
+import StatusFilter from "./StatusFilter"
 import "../styles/orders.css"
+import { DateContext } from "../context/DateContext"
 
 function Orders() {
     const { orders, setOrders } = useContext(OrderContext)
+    const { thisWeekEvents } = useContext(DateContext)
+    const [filter, setFilter] = useState("this_week")
+
+    const filteredOrders = orders.filter(order => {
+        if (filter === 'all') return true
+        if (filter === 'active') return order.status !== "completed"
+        if (filter === 'completed') return order.status === 'completed'
+        if (filter === 'this_week') {
+
+        }
+    })
 
     const orderElements = orders.map(order=>{
         return <Order key={order.id} order={order} onDeleteOrder={handleDelete}/>
@@ -31,6 +44,7 @@ function Orders() {
     return (
         <div className="orders-container">
             <h1 className="orders-heading">Orders</h1>
+            <StatusFilter currentFilter={filter} setFilter={setFilter}/>
             <table className="orders-table">
                 <thead>
                     <tr>
