@@ -1,18 +1,71 @@
 .order-panel {
+  display: flex;
+  flex-direction: column;
   position: fixed;
   top: 0;
   right: 0;
   height: 100vh;
-  width: 330px;
-  background-color: #f7f7f7;
-  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
+  width: 350px;
+  background-color: #fffaf6;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  transform: translateX(100%);
   animation: slideIn 0.3s forwards;
   overflow: hidden;
-  padding: 0;
+  border-left: 2px solid #e5d8c2;
+}
+
+.order-panel-header {
+  background-color: #fef9f4;
+  border-bottom: 1px solid #eee;
+  padding: 1rem 1.25rem 0.75rem;
+  flex-shrink: 0;
+}
+
+.order-panel-header-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  width: 100%
+}
+
+.order-panel-header-buttons .panel-close-button {
+  order: 1;
+  
+}
+
+.order-panel-header-buttons button {
+  background-color: #f0e2c0;
+  border: none;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #5a3e36;
+  transition: background-color 0.2s ease;
+}
+
+.order-panel-header-buttons button:hover {
+  background-color: #e5d3a8;
+}
+
+.panel-close-button {
+  background: transparent;
+  color: #a77;
+  font-size: 1.25rem;
+  font-weight: bold;
+  line-height: 1;
+  padding: 6px;
+}
+
+.order-customer-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #5a3e36;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .order-panel-content {
@@ -28,9 +81,50 @@
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.item-panel-footer {
-  padding: 1rem;
-  border-top: 1px solid #ccc;
-  background-color: #fffaf6;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+.order-panel-footer button {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.edit-button {
+  background-color: #f0e2c0;
+  color: #5a3e36;
+}
+
+.edit-button:hover {
+  background-color: #e5d3a8;
+}
+
+.save-button {
+  background-color: #d6e7d0;
+  color: #3e5a36;
+}
+
+.save-button:hover {
+  background-color: #c3dbbc;
+}
+
+.cancel-button {
+  background-color: #f6d4d4;
+  color: #733e3e;
+}
+
+.cancel-button:hover {
+  background-color: #ebc1c1;
+}
+
+.order-info-table td {
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+}
+
+.order-info-table .label {
+  font-weight: 600;
+  width: 100px;
+  white-space: nowrap;
 }

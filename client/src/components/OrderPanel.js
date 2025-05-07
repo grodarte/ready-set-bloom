@@ -35,10 +35,14 @@ function OrderPanel() {
     
     return (
         <div className="order-panel">
+            <div className="order-panel-header">
+                <div className="order-panel-header-buttons">
+                    <button className="panel-close-button" onClick={() => setSelectedOrderId(null)}>x</button>
+                    <button onClick={() => setShowModal(true)}>Mark as...</button>
+                </div>
+                <h2 className="order-customer-name">{customer}</h2>
+            </div>
             <div className="order-panel-content">
-                <button onClick={() => setSelectedOrderId(null)}>x</button>
-                <button onClick={() => setShowModal(true)}>Mark as...</button>
-                <h2>{customer}</h2>
                 <h3>Delivery Details</h3>
                 <table className="order-info-table">
                     <tbody>
@@ -90,11 +94,11 @@ function OrderPanel() {
                 <div className="order-panel-footer">
                     {isEditing ? (
                         <>
-                            <button onClick={handleSave}>Save</button>
-                            <button onClick={cancelEditing}>Cancel</button>
+                            <button className="save-button" onClick={handleSave}>Save</button>
+                            <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
                     ) : (
-                        <button onClick={startEditing}>Edit Order Details</button>
+                        <button className="edit-button" onClick={startEditing}>Edit Order Details</button>
                     )}
                 </div>
                 <div>
