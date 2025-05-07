@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { useContext, useState } from 'react';
+import { DateContext} from '../context/DateContext'
 import { OrderContext } from '../context/order';
 import { ItemContext } from '../context/item';
 import { EventContext } from '../context/event';
@@ -9,6 +10,7 @@ import { formatDate, formatOrder, formatItem } from '../formatters';
 import "../styles/neworderform.css"
 
 function NewOrderForm() {
+    const { startOfWeek } = useContext(DateContext)
     const { setOrders } = useContext(OrderContext)
     const { setItems } = useContext(ItemContext)
     const { events } = useContext(EventContext)
@@ -149,7 +151,10 @@ function NewOrderForm() {
                                     onChange={(e)=> setFieldValue("event_id", Number(e.target.value))}
                                 >
                                     <option value="">Select Event</option>
-                                    {events.map(event=>(
+                                    {events.filter(event => {
+                                            const eventDate = new Date(event.event_date)
+                                            return eventDate >= startOfWeek
+                                        }).map(event=>(
                                         <option key={event.id} value={event.id}>
                                             {formatDate(event?.event_date)} | {event.name}
                                         </option>
