@@ -10,8 +10,8 @@ import "../styles/orderpanel.css"
 
 function OrderPanel() {
     const [showModal, setShowModal] = useState(false)
-    const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { orders } =  useContext(OrderContext)
+    const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
     const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
         customer: customer,
@@ -19,6 +19,8 @@ function OrderPanel() {
         address: address,
         delivery_details: delivery_details,
     })
+
+    //FIX clicking a different order and order info not updating
 
     function handleMarkStatus() {
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
@@ -33,7 +35,7 @@ function OrderPanel() {
     
     return (
         <div className="order-panel">
-            <div>
+            <div className="order-panel-content">
                 <button onClick={() => setSelectedOrderId(null)}>x</button>
                 <button onClick={() => setShowModal(true)}>Mark as...</button>
                 <h2>{customer}</h2>
@@ -86,20 +88,22 @@ function OrderPanel() {
                         </tr>
                     </tbody>
                 </table>
-            </div>
-            <div>
-                <h3>{`Items (${items.length})`}</h3>
-                {itemElements}
+                <div className="order-panel-footer">
+                    {isEditing ? (
+                        <>
+                            <button onClick={handleSave}>Save</button>
+                            <button onClick={cancelEditing}>Cancel</button>
+                        </>
+                    ) : (
+                        <button onClick={startEditing}>Edit Order Details</button>
+                    )}
+                </div>
+                <div>
+                    <h3>{`Items (${items.length})`}</h3>
+                    {itemElements}
+                </div>
             </div>
             {showModal && <StatusModal onMarkStatus={handleMarkStatus} setShowModal={setShowModal}/>}
-            {isEditing ? (
-                <>
-                    <button onClick={handleSave}>Save</button>
-                    <button onClick={cancelEditing}>Cancel</button>
-                </>
-            ) : (
-                <button onClick={startEditing}>Edit</button>
-            )}
         </div>
     )
 }
