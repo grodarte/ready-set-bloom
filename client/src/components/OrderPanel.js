@@ -1,17 +1,20 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { OrderPanelContext } from "../context/orderpanel"
-import "../styles/orderpanel.css"
 import { OrderContext } from "../context/order"
 import ItemPanel from "./ItemPanel"
+import StatusModal from "./StatusModal"
+import "../styles/orderpanel.css"
 
 
 function OrderPanel() {
+    const [showModal, setShowModal] = useState(false)
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { orders } =  useContext(OrderContext)
     const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
 
-    function statusUpdate() {
+    function handleMarkStatus() {
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
+        // patch logic for items in order
     }
 
     const itemElements = items.map(item => <ItemPanel key={item.id} item={item}/>)
@@ -20,7 +23,7 @@ function OrderPanel() {
         <div className="order-panel">
             <div>
                 <button onClick={() => setSelectedOrderId(null)}>x</button>
-                <button onClick={statusUpdate}>Mark as...</button>
+                <button onClick={() => setShowModal(true)}>Mark as...</button>
                 <h2>{customer}</h2>
                 <h3>Delivery Details</h3>
                 <span>Due <span>{event.event_date}</span></span>
@@ -55,6 +58,7 @@ function OrderPanel() {
                 <h3>{`Items (${items.length})`}</h3>
                 {itemElements}
             </div>
+            {showModal && <StatusModal onMarkStatus={handleMarkStatus} setShowModal={setShowModal}/>}
         </div>
     )
 }
