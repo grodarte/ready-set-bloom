@@ -11,9 +11,9 @@ function ItemPanel({ item }) {
     const { accents } = useContext(AccentContext)
     const { id, item_type, item_status, ribbon_color, special_requests, wristlet, flower, accent } = item
     const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
-        wristlet_id: wristlet.id,
-        flower_id: flower.id,
-        accent_id: accent.id,
+        wristlet_id: wristlet?.id || null,
+        flower_id: flower?.id || null,
+        accent_id: accent?.id || null,
         ribbon_color: ribbon_color,
         special_requests: special_requests
     })
@@ -78,7 +78,7 @@ function ItemPanel({ item }) {
                                 />
                             </td>
                         </tr>
-                        { (special_requests && isEditing) && (<tr>
+                        { special_requests && (<tr>
                             <td className="label">Special Requests: </td>
                             <td>
                                 <EditableField

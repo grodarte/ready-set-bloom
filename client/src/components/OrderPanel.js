@@ -40,7 +40,6 @@ function OrderPanel() {
                 <button onClick={() => setShowModal(true)}>Mark as...</button>
                 <h2>{customer}</h2>
                 <h3>Delivery Details</h3>
-                <span>Due <span>{event.event_date}</span></span>
                 <table className="order-info-table">
                     <tbody>
                         <tr>

@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function useInlineEdit(initialValues) {
     const [isEditing, setIsEditing] = useState(false);
     const [editData, setEditData] = useState(initialValues);
+
+    useEffect(() => {
+        setEditData(initialValues)
+    }, [JSON.stringify(initialValues)])
 
     function startEditing() {
         setIsEditing(true);
