@@ -9,8 +9,8 @@ import { formatDate, formatOrder, formatItem } from '../formatters';
 import "../styles/neworderform.css"
 
 function NewOrderForm() {
-    const { orders, setOrders } = useContext(OrderContext)
-    const { items, setItems } = useContext(ItemContext)
+    const { setOrders } = useContext(OrderContext)
+    const { setItems } = useContext(ItemContext)
     const { events } = useContext(EventContext)
     const [successMsg, setSuccessMsg] = useState("")
 

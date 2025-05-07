@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { EventContext } from "./event"
+import React from "react";
 
 const DateContext = React.createContext()
 

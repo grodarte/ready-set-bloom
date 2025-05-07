@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
 import { OrderPanelContext } from "../context/orderpanel"
 import { OrderContext } from "../context/order"
+import useInlineEdit from "../hooks/useInlineEdit"
+import EditableField from "./EditableField"
 import ItemPanel from "./ItemPanel"
 import StatusModal from "./StatusModal"
 import "../styles/orderpanel.css"
@@ -11,10 +13,20 @@ function OrderPanel() {
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { orders } =  useContext(OrderContext)
     const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
+    const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
+        customer: customer,
+        phone: phone,
+        address: address,
+        delivery_details: delivery_details,
+    })
 
     function handleMarkStatus() {
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
         // patch logic for items in order
+    }
+
+    function handleSave() {
+        // patch logic for order and items
     }
 
     const itemElements = items.map(item => <ItemPanel key={item.id} item={item}/>)
@@ -31,15 +43,36 @@ function OrderPanel() {
                     <tbody>
                         <tr>
                             <td className="label">Customer</td>
-                            <td>{customer}</td>
+                            <td>
+                                <EditableField
+                                    name='customer'
+                                    value={editData.customer}
+                                    isEditing={isEditing}
+                                    onChange={handleChange}
+                                />
+                            </td>
                         </tr>
                         <tr>
                             <td className="label">Phone</td>
-                            <td>{phone}</td>
+                            <td>
+                                <EditableField
+                                    name='phone'
+                                    value={editData.phone}
+                                    isEditing={isEditing}
+                                    onChange={handleChange}
+                                />
+                            </td>
                         </tr>
                         <tr>
                             <td className="label">Deliver to</td>
-                            <td>{address}</td>
+                            <td>
+                                <EditableField
+                                    name='address'
+                                    value={editData.address}
+                                    isEditing={isEditing}
+                                    onChange={handleChange}
+                                />
+                            </td>
                         </tr>
                         {delivery_details && (
                             <tr>
@@ -59,6 +92,14 @@ function OrderPanel() {
                 {itemElements}
             </div>
             {showModal && <StatusModal onMarkStatus={handleMarkStatus} setShowModal={setShowModal}/>}
+            {isEditing ? (
+                <>
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={cancelEditing}>Cancel</button>
+                </>
+            ) : (
+                <button onClick={startEditing}>Edit</button>
+            )}
         </div>
     )
 }
