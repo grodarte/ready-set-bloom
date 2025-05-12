@@ -12,8 +12,8 @@ function Items() {
 
     const filteredItems = items.filter(item => {
         if (filter === 'all') return true
-        if (filter === 'active') return item.order.status !== "completed"
-        if (filter === 'completed') return item.order.status === 'completed'
+        if (filter === 'active') return (item.item_status !== "Completed")
+        if (filter === 'completed') return (item.item_status === 'Completed')
         if (filter === 'this_week') {
             const itemDate = new Date(item.order.event.event_date)
             return itemDate >= startOfWeek && itemDate <= endOfWeek

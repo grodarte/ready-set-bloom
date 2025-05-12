@@ -7,7 +7,7 @@ from config import db
 from datetime import datetime
 
 ITEM_TYPES = ['corsage', 'boutonniere', 'bouquet']
-ITEM_STATUSES = ['new', 'prepped', 'complete']
+ITEM_STATUSES = ['new', 'prepped', 'completed']
 
 class Event(db.Model, SerializerMixin):
     __tablename__ = "events"

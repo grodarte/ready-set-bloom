@@ -1,0 +1,122 @@
+.item-panel {
+    background-color: #fffaf6;
+    border: 1px solid #e6e2db;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+  }
+  
+  .item-panel-footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .edit-button, .save-button, .cancel-button {
+    display: inline-block;
+  }
+  
+  .item-icon {
+    flex-shrink: 0;
+    width: 50px;
+  }
+  
+  .item-image {
+    width: 48px;
+    height: auto;
+  }
+  
+  .item-details {
+    flex-grow: 1;
+  }
+  
+  .item-type {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: capitalize;
+  }
+  
+  .item-info-table {
+    width: 100%;
+    font-size: 0.9rem;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+  }
+  
+  .item-info-table td {
+    padding: 0.25rem 0.5rem;
+    vertical-align: top;
+  }
+  
+  .item-info-table .label {
+    font-weight: 600;
+    width: 100px;
+    white-space: nowrap;
+  }
+  
+  .item-panel {
+    background-color: #fffaf6;
+    border: 1px solid #e6e2db;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    position: relative;
+  }
+  
+  .item-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #5a3e36;
+    text-transform: capitalize;
+  }
+  
+  .item-status {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: #7d6a58;
+  }
+  
+  .item-panel-footer button {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .edit-button {
+    display: inline-block;
+    margin-top: 0.5rem;
+    background-color: #f0e2c0;
+    color: #5a3e36;
+  }
+  
+  .edit-button:hover {
+    background-color: #e5d3a8;
+  }
+  
+  .save-button {
+    background-color: #d6e7d0;
+    color: #3e5a36;
+  }
+  
+  .save-button:hover {
+    background-color: #c3dbbc;
+  }
+  
+  .cancel-button {
+    background-color: #f6d4d4;
+    color: #733e3e;
+  }
+  
+  .cancel-button:hover {
+    background-color: #ebc1c1;
+  }

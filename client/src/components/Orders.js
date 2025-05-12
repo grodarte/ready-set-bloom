@@ -12,8 +12,8 @@ function Orders() {
 
     const filteredOrders = orders.filter(order => {
         if (filter === 'all') return true
-        if (filter === 'active') return order.status !== "completed"
-        if (filter === 'completed') return order.status === 'completed'
+        if (filter === 'active') return new Date(order.event.event_date) >= startOfWeek
+        if (filter === 'completed') return new Date(order.event.event_date) <= startOfWeek
         if (filter === 'this_week') {
             const orderDate = new Date(order.event.event_date)
             return orderDate >= startOfWeek && orderDate <= endOfWeek

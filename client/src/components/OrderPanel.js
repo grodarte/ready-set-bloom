@@ -5,26 +5,58 @@ import useInlineEdit from "../hooks/useInlineEdit"
 import EditableField from "./EditableField"
 import ItemPanel from "./ItemPanel"
 import StatusModal from "./StatusModal"
+import { formatItem } from "../formatters"
 import "../styles/orderpanel.css"
+import { ItemContext } from "../context/item"
 
 
 function OrderPanel() {
     const [showModal, setShowModal] = useState(false)
     const { orders } =  useContext(OrderContext)
+    const { setItems } = useContext(ItemContext)
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
-    const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
+    const { isEditing, setIsEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
         customer: customer,
         phone: phone,
         address: address,
         delivery_details: delivery_details,
     })
 
-    //FIX clicking a different order and order info not updating
-
-    function handleMarkStatus() {
+    function handleMarkStatus(status) {
+        setShowModal(false)
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
-        // patch logic for items in order
+        items.forEach(item => {
+            fetch(`/api/items/${item.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    item_status: status
+                })
+            })
+            .then(r=> {
+                if (!r.ok) throw new Error("Failed to update item status")
+                return r.json()
+            })
+            .then(updatedItem => {
+                const formattedItem = formatItem(updatedItem)
+                setItems(prev => prev.map(item => {
+                    if (item.id === formattedItem.id) {
+                        return formattedItem
+                    } else return item
+                }))
+                setIsEditing(false)
+
+                // setSuccessMsg("Item updated successfully!")
+                // window.scrollTo({ top: 0, behavior: 'smooth' })
+                // setTimeout(()=> setSuccessMsg(""), 5000)
+            })
+            .catch(err => {
+                console.error("Error updating item status:", err)
+            })
+        })
     }
 
     function handleSave() {
@@ -101,10 +133,8 @@ function OrderPanel() {
                         <button className="edit-button" onClick={startEditing}>Edit Order Details</button>
                     )}
                 </div>
-                <div>
-                    <h3>{`Items (${items.length})`}</h3>
-                    {itemElements}
-                </div>
+                <h3>{`Items (${items.length})`}</h3>
+                {itemElements}
             </div>
             {showModal && <StatusModal onMarkStatus={handleMarkStatus} setShowModal={setShowModal}/>}
         </div>

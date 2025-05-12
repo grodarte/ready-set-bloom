@@ -4,6 +4,7 @@ import useInlineEdit from "../hooks/useInlineEdit"
 import { WristletContext } from "../context/wristlet"
 import { FlowerContext } from "../context/flower"
 import { AccentContext } from "../context/accent"
+import "../styles/itempanel.css"
 
 function ItemPanel({ item }) {
     const { wristlets } = useContext(WristletContext)
@@ -19,13 +20,13 @@ function ItemPanel({ item }) {
     })
 
     function handleSave() {
-        // patch logic for order and items
+        // patch logic for items
     }
 
     return (
         <div className="item-panel">
-            <h4>{item_type}</h4>
-            <p>{item_status}</p>
+                <h4 className="item-title">{item_type}</h4>
+                <p className="item-status">{item_status}</p>  
                 <table className="item-info-table">
                     <tbody>
                         { wristlet && (<tr>
@@ -94,11 +95,11 @@ function ItemPanel({ item }) {
                 <div className="item-panel-footer">
                     {isEditing ? (
                         <>
-                            <button onClick={handleSave}>Save</button>
-                            <button onClick={cancelEditing}>Cancel</button>
+                            <button className="save-button" onClick={handleSave}>Save</button>
+                            <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
                     ) : (
-                        <button onClick={startEditing}>Edit Item</button>
+                        <button className="edit-button" onClick={startEditing}>Edit Item</button>
                     )}
                 </div>
         </div>

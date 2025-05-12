@@ -23,6 +23,7 @@ function useInlineEdit(initialValues) {
 
     return {
         isEditing,
+        setIsEditing,
         editData,
         setEditData,
         startEditing,
