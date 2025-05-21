@@ -23,10 +23,15 @@ function ItemPanel({ item }) {
         // patch logic for items
     }
 
+    function handleDelete() {
+        // delete logic for items
+    }
+
     return (
         <div className="item-panel">
+                <button>⋮</button>
                 <h4 className="item-title">{item_type}</h4>
-                <p className="item-status">{item_status}</p>  
+                <p className="item-status">{item_status}</p>
                 <table className="item-info-table">
                     <tbody>
                         { wristlet && (<tr>

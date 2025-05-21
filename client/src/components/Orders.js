@@ -42,6 +42,9 @@ function Orders() {
         })
     }
 
+    if (!orders) return <p>Loading orders...</p>
+
+
     return (
         <div className="orders-container">
             <h1 className="orders-heading">Orders</h1>

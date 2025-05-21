@@ -11,7 +11,8 @@ import { ItemContext } from "../context/item"
 
 
 function OrderPanel() {
-    const [showModal, setShowModal] = useState(false)
+    const [showStatusModal, setShowStatusModal] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const { orders } =  useContext(OrderContext)
     const { setItems } = useContext(ItemContext)
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
@@ -24,7 +25,7 @@ function OrderPanel() {
     })
 
     function handleMarkStatus(status) {
-        setShowModal(false)
+        setShowStatusModal(false)
         console.log("Pop up saying: Mark items as... with the status of prepped or completed")
         items.forEach(item => {
             fetch(`/api/items/${item.id}`, {
@@ -70,7 +71,7 @@ function OrderPanel() {
             <div className="order-panel-header">
                 <div className="order-panel-header-buttons">
                     <button className="panel-close-button" onClick={() => setSelectedOrderId(null)}>x</button>
-                    <button onClick={() => setShowModal(true)}>Mark as...</button>
+                    <button onClick={() => setShowStatusModal(true)}>Mark as...</button>
                 </div>
                 <h2 className="order-customer-name">{customer}</h2>
             </div>
@@ -114,7 +115,15 @@ function OrderPanel() {
                         {delivery_details && (
                             <tr>
                                 <td className="label">Delivery Details</td>
-                                <td>{delivery_details}</td>
+                                {/* <td>{delivery_details}</td> */}
+                                <td>
+                                    <EditableField
+                                        name='delivery_details'
+                                        value={editData.delivery_details}
+                                        isEditing={isEditing}
+                                        onChange={handleChange}
+                                    />
+                                </td>
                             </tr>
                         )}
                         <tr>
@@ -135,8 +144,9 @@ function OrderPanel() {
                 </div>
                 <h3>{`Items (${items.length})`}</h3>
                 {itemElements}
+                <button onClick={()=>setShowDeleteModal(true)}>DELETE ORDER</button>
             </div>
-            {showModal && <StatusModal onMarkStatus={handleMarkStatus} setShowModal={setShowModal}/>}
+            {showStatusModal && <StatusModal onMarkStatus={handleMarkStatus} setShowStatusModal={setShowStatusModal}/>}
         </div>
     )
 }
