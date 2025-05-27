@@ -8,7 +8,7 @@ import { DateContext } from "../context/DateContext"
 function Orders() {
     const { orders, setOrders } = useContext(OrderContext)
     const { startOfWeek, endOfWeek } = useContext(DateContext)
-    const [filter, setFilter] = useState("active")
+    const [filter, setFilter] = useState("all")
 
     const filteredOrders = orders.filter(order => {
         if (filter === 'all') return true
