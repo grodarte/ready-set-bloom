@@ -21,26 +21,8 @@ function Orders() {
     })
 
     const orderElements = filteredOrders.map(order=>{
-        return <Order key={order.id} order={order} onDeleteOrder={handleDelete}/>
+        return <Order key={order.id} order={order}/>
     })
-
-    function handleEdit(order) {
-        // side panel logic ?
-        console.log("Edit order: ", order)
-    }
-
-    function handleDelete(id) {
-        // fetch - delete order by id
-        console.log(id)
-        fetch(`/api/orders/${id}`, {
-            method: 'DELETE'
-        })
-        .then(r => {
-            if(r.ok) {
-                setOrders(orders => orders.filter(order => order.id !== id))
-            }
-        })
-    }
 
     if (!orders) return <p>Loading orders...</p>
 
