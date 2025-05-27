@@ -26,8 +26,6 @@ function OrderPanel() {
         delivery_details: delivery_details,
     })
     
-
-
     function handleMarkStatus(status) {
         setShowStatusModal(false)
         filteredItems.forEach(item => {
@@ -60,11 +58,36 @@ function OrderPanel() {
         })
     }
 
-    function handleSave() {
-        // patch logic for order and items
+    function handleSaveOrder() {
+        const cleanedPhone = editData.phone.replace(/\D/g, "")
+
+        const updatedOrder = {
+            customer: editData.customer,
+            phone: cleanedPhone,
+            address: editData.address,
+            delivery_details: editData.delivery_details
+        }
+        // patch logic for orders
+        fetch(`/api/orders/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedOrder)
+        })
+        .then(r => {
+            if (!r.ok) throw new Error("Failed to updated order")
+            return r.json()
+        })
+        .then(updatedOrder => {
+            setOrders(prev => prev.map(order => order.id === updatedOrder.id ? updatedOrder : order))
+            setItems(prev => prev.map(item => item.order_id === updatedOrder.id ? {...item, order: updatedOrder} : item))
+            setIsEditing(false)
+        })
+        .catch(err => console.error("Error updating order:", err))
     }
 
-    function handleDelete() {
+    function handleDeleteOrder() {
         fetch(`/api/orders/${id}`, {
             method: "DELETE"
         }).then(r=> {
@@ -86,7 +109,7 @@ function OrderPanel() {
                             <h3 className="modal-heading">Are you sure you want to delete this order?</h3>
                             <h4>All associated items will also be deleted.</h4>
                             <div className="modal-buttons">
-                                <button style={{ color: "red" }} onClick={handleDelete}>DELETE</button>
+                                <button style={{ color: "red" }} onClick={handleDeleteOrder}>DELETE</button>
                                 <button className="cancel" onClick={() => setShowDeleteModal(false)}>Cancel</button>
                             </div>
                         </div>
@@ -140,7 +163,6 @@ function OrderPanel() {
                         </tr>
                         <tr>
                             <td className="label">Delivery Details</td>
-                            {/* <td>{delivery_details}</td> */}
                             <td>
                                 <EditableField
                                     name='delivery_details'
@@ -159,14 +181,14 @@ function OrderPanel() {
                 <div className="order-panel-footer">
                     {isEditing ? (
                         <>
-                            <button className="save-button" onClick={handleSave}>Save</button>
+                            <button className="save-button" onClick={handleSaveOrder}>Save</button>
                             <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
                     ) : (
                         <button className="edit-button" onClick={startEditing}>Edit Order Details</button>
                     )}
                 </div>
-                <h3>{`Items (${items.length})`}</h3>
+                <h3>{`Items (${filteredItems.length})`}</h3>
                 {itemElements}
                 <button onClick={()=>setShowDeleteModal(true)}>DELETE ORDER</button>
             </div>

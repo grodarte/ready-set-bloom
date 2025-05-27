@@ -153,9 +153,9 @@ class OrderByID(Resource):
         order = Order.query.filter_by(id=id).first()
         json = request.get_json()
         for attr, value in json.items():
-            setattr(item, attr, value)
+            setattr(order, attr, value)
 
-        db.session.add(item)
+        db.session.add(order)
         db.session.commit()
 
         return order.to_dict(), 200
