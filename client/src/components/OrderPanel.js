@@ -14,20 +14,23 @@ function OrderPanel() {
     const [showStatusModal, setShowStatusModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const { orders, setOrders } =  useContext(OrderContext)
-    const { setItems } = useContext(ItemContext)
+    const { items, setItems } = useContext(ItemContext)
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
-    const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
+    const selectedOrder = orders.find(order => order.id === selectedOrderId)    
+    const { id, customer, phone, address, delivery_details, event} = selectedOrder
+    const filteredItems = items.filter(item => item.order_id === selectedOrderId)
     const { isEditing, setIsEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
         customer: customer,
         phone: phone,
         address: address,
         delivery_details: delivery_details,
     })
+    
+
 
     function handleMarkStatus(status) {
         setShowStatusModal(false)
-        console.log("Pop up saying: Mark items as... with the status of prepped or completed")
-        items.forEach(item => {
+        filteredItems.forEach(item => {
             fetch(`/api/items/${item.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -49,6 +52,7 @@ function OrderPanel() {
                     } else return item
                 }))
                 setIsEditing(false)
+                
             })
             .catch(err => {
                 console.error("Error updating item status:", err)
@@ -72,7 +76,7 @@ function OrderPanel() {
         })
     }
 
-    const itemElements = items.map(item => <ItemPanel key={item.id} item={item}/>)
+    const itemElements = filteredItems.map(item => <ItemPanel key={item.id} item={item}/>)
     
     return (
         <div className="order-panel">
@@ -134,20 +138,18 @@ function OrderPanel() {
                                 />
                             </td>
                         </tr>
-                        {delivery_details && (
-                            <tr>
-                                <td className="label">Delivery Details</td>
-                                {/* <td>{delivery_details}</td> */}
-                                <td>
-                                    <EditableField
-                                        name='delivery_details'
-                                        value={editData.delivery_details}
-                                        isEditing={isEditing}
-                                        onChange={handleChange}
-                                    />
-                                </td>
-                            </tr>
-                        )}
+                        <tr>
+                            <td className="label">Delivery Details</td>
+                            {/* <td>{delivery_details}</td> */}
+                            <td>
+                                <EditableField
+                                    name='delivery_details'
+                                    value={editData.delivery_details}
+                                    isEditing={isEditing}
+                                    onChange={handleChange}
+                                />
+                            </td>
+                        </tr>
                         <tr>
                             <td className="label">Deliver by</td>
                             <td>{event.event_date}</td>

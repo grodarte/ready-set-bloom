@@ -84,7 +84,7 @@ function ItemPanel({ item }) {
                                 />
                             </td>
                         </tr>
-                        { special_requests && (<tr>
+                        <tr>
                             <td className="label">Special Requests: </td>
                             <td>
                                 <EditableField
@@ -94,7 +94,7 @@ function ItemPanel({ item }) {
                                     onChange={handleChange}
                                 />
                             </td>
-                        </tr>)}
+                        </tr>
                     </tbody>
                 </table>
                 <div className="item-panel-footer">
