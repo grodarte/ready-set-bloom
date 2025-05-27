@@ -5,7 +5,7 @@ import useInlineEdit from "../hooks/useInlineEdit"
 import EditableField from "./EditableField"
 import ItemPanel from "./ItemPanel"
 import StatusModal from "./StatusModal"
-import { formatItem } from "../formatters"
+import { formatItem, formatOrder } from "../formatters"
 import "../styles/orderpanel.css"
 import { ItemContext } from "../context/item"
 
@@ -67,7 +67,7 @@ function OrderPanel() {
             address: editData.address,
             delivery_details: editData.delivery_details
         }
-        // patch logic for orders
+
         fetch(`/api/orders/${id}`, {
             method: "PATCH",
             headers: {
@@ -80,8 +80,9 @@ function OrderPanel() {
             return r.json()
         })
         .then(updatedOrder => {
-            setOrders(prev => prev.map(order => order.id === updatedOrder.id ? updatedOrder : order))
-            setItems(prev => prev.map(item => item.order_id === updatedOrder.id ? {...item, order: updatedOrder} : item))
+            const formattedOrder = formatOrder(updatedOrder)
+            setOrders(prev => prev.map(order => order.id === updatedOrder.id ? formattedOrder : order))
+            setItems(prev => prev.map(item => item.order_id === updatedOrder.id ? {...item, order: formattedOrder} : item))
             setIsEditing(false)
         })
         .catch(err => console.error("Error updating order:", err))

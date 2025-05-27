@@ -8,7 +8,7 @@ import "../styles/items.css";
 function Items() {
     const { items } = useContext(ItemContext)
     const { startOfWeek, endOfWeek } = useContext(DateContext)
-    const [filter, setFilter] = useState("this_week")
+    const [filter, setFilter] = useState("active")
 
     const filteredItems = items.filter(item => {
         if (filter === 'all') return true
