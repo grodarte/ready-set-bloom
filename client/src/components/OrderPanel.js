@@ -13,7 +13,7 @@ import { ItemContext } from "../context/item"
 function OrderPanel() {
     const [showStatusModal, setShowStatusModal] = useState(false)
     const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const { orders } =  useContext(OrderContext)
+    const { orders, setOrders } =  useContext(OrderContext)
     const { setItems } = useContext(ItemContext)
     const { selectedOrderId, setSelectedOrderId } = useContext(OrderPanelContext)
     const { id, customer, phone, address, delivery_details, event, items} = orders.find(order => order.id === selectedOrderId)
@@ -49,10 +49,6 @@ function OrderPanel() {
                     } else return item
                 }))
                 setIsEditing(false)
-
-                // setSuccessMsg("Item updated successfully!")
-                // window.scrollTo({ top: 0, behavior: 'smooth' })
-                // setTimeout(()=> setSuccessMsg(""), 5000)
             })
             .catch(err => {
                 console.error("Error updating item status:", err)
@@ -64,10 +60,36 @@ function OrderPanel() {
         // patch logic for order and items
     }
 
+    function handleDelete() {
+        fetch(`/api/orders/${id}`, {
+            method: "DELETE"
+        }).then(r=> {
+            if (r.ok) {
+                setSelectedOrderId(null)
+                setOrders(orders => orders.filter(order => order.id !== id))
+                setItems(items => items.filter(item => item.order_id !== id))
+            }
+        })
+    }
+
     const itemElements = items.map(item => <ItemPanel key={item.id} item={item}/>)
     
     return (
         <div className="order-panel">
+            {showDeleteModal ? (
+                    <div className="modal-backdrop">
+                        <div className="modal-content">
+                            <h3 className="modal-heading">Are you sure you want to delete this order?</h3>
+                            <h4>All associated items will also be deleted.</h4>
+                            <div className="modal-buttons">
+                                <button style={{ color: "red" }} onClick={handleDelete}>DELETE</button>
+                                <button className="cancel" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+            ) : (
+                null
+            )}
             <div className="order-panel-header">
                 <div className="order-panel-header-buttons">
                     <button className="panel-close-button" onClick={() => setSelectedOrderId(null)}>x</button>

@@ -36,7 +36,7 @@ function PrepSummary({ events }) {
         }
     }, [orders, events])
 
-    if (!prepStats) return <p>Loading prep summary...</p>
+    if (!prepStats) return <p></p>
     
     return (
         <div>

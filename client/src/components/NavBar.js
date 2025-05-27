@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { SettingsContext } from "../context/settings"
 
 function NavBar() {
-    const { showSettings, setShowSettings } = useContext(SettingsContext)
+    const { setShowSettings } = useContext(SettingsContext)
 
     return (
         <nav className="navbar">
