@@ -94,17 +94,27 @@ function OrderPanel() {
         }).then(r=> {
             if (r.ok) {
                 setSelectedOrderId(null)
-                setOrders(orders => orders.filter(order => order.id !== id))
-                setItems(items => items.filter(item => item.order_id !== id))
+                setOrders(prev => prev.filter(order => order.id !== id))
+                setItems(prev => prev.filter(item => item.order_id !== id))
             }
         })
     }
 
-    const itemElements = filteredItems.map(item => <ItemPanel key={item.id} item={item}/>)
+    function handleDeleteItem(id) {
+        fetch(`api/items/${id}`, {
+            method: "DELETE"
+        }).then(r => {
+            if (r.ok) {
+                setItems(items => items.filter(item => item.id !== id))
+            }
+        })
+    }
+
+    const itemElements = filteredItems.map(item => <ItemPanel key={item.id} item={item} onDeleteItem={handleDeleteItem}/>)
     
     return (
         <div className="order-panel">
-            {showDeleteModal ? (
+            {showDeleteModal && (
                     <div className="modal-backdrop">
                         <div className="modal-content">
                             <h3 className="modal-heading">Are you sure you want to delete this order?</h3>
@@ -115,8 +125,6 @@ function OrderPanel() {
                             </div>
                         </div>
                     </div>
-            ) : (
-                null
             )}
             <div className="order-panel-header">
                 <div className="order-panel-header-buttons">

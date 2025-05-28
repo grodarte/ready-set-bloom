@@ -1,15 +1,19 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
+import DropdownMenu from "./DropdownMenu"
 import EditableField from "./EditableField"
 import useInlineEdit from "../hooks/useInlineEdit"
 import { WristletContext } from "../context/wristlet"
 import { FlowerContext } from "../context/flower"
 import { AccentContext } from "../context/accent"
+import { ItemContext } from "../context/item"
 import "../styles/itempanel.css"
 
-function ItemPanel({ item }) {
+function ItemPanel({ item, onDeleteItem }) {
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const { wristlets } = useContext(WristletContext)
     const { flowers } = useContext(FlowerContext)
     const { accents } = useContext(AccentContext)
+    const { items, setItems } = useContext(ItemContext)
     const { id, item_type, item_status, ribbon_color, special_requests, wristlet, flower, accent } = item
     const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
         wristlet_id: wristlet?.id || null,
@@ -19,17 +23,40 @@ function ItemPanel({ item }) {
         special_requests: special_requests
     })
 
-    function handleSave() {
+    function handleSaveItem() {
         // patch logic for items
     }
 
-    function handleDelete() {
-        // delete logic for items
+    function handleDeleteItem() {
+        //delete logic for items
     }
+
+    function handleMarkItemStatus() {
+
+    }
+
 
     return (
         <div className="item-panel">
-                <button>⋮</button>
+            {showDeleteModal && (
+                <div className="modal-backdrop">
+                    <div className="modal-content">
+                        <h3 className="modal-heading">Are you sure you want to delete this item?</h3>
+                        <h5>Deleting an item cannot be undone.</h5>
+                        <div className="modal-buttons">
+                            <button 
+                                style={{ color: "red" }} 
+                                onClick={() => {onDeleteItem(id)
+                                    setShowDeleteModal(false)}}
+                            >
+                                DELETE
+                            </button>
+                            <button className="cancel" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+                <DropdownMenu onDelete={() => setShowDeleteModal(true)} onEdit={startEditing}/>
                 <h4 className="item-title">{item_type}</h4>
                 <p className="item-status">{item_status}</p>
                 <table className="item-info-table">
@@ -100,7 +127,7 @@ function ItemPanel({ item }) {
                 <div className="item-panel-footer">
                     {isEditing ? (
                         <>
-                            <button className="save-button" onClick={handleSave}>Save</button>
+                            <button className="save-button" onClick={handleSaveItem}>Save</button>
                             <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
                     ) : (

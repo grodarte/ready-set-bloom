@@ -1,6 +1,6 @@
 import "./../styles/statusmodal.css"
 
-function StatusModal({ setShowModal, onMarkStatus }) {
+function StatusModal({ setShowStatusModal, onMarkStatus }) {
 
     return (
         <div className="modal-backdrop">
@@ -9,7 +9,7 @@ function StatusModal({ setShowModal, onMarkStatus }) {
                 <div className="modal-buttons">
                     <button onClick={() => onMarkStatus('prepped')}>Prepped</button>
                     <button onClick={() => onMarkStatus('completed')}>Completed</button>
-                    <button className="cancel" onClick={() => setShowModal(false)}>Cancel</button>
+                    <button className="cancel" onClick={() => setShowStatusModal(false)}>Cancel</button>
                 </div>
             </div>
         </div>
