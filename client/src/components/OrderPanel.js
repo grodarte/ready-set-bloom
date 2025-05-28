@@ -119,12 +119,16 @@ function OrderPanel() {
         })
     }
 
-    function handleDeleteItem(id) {
-        fetch(`api/items/${id}`, {
+    function handleDeleteItem(deleteItem) {
+        console.log(deleteItem)
+        fetch(`/api/items/${deleteItem.id}`, {
             method: "DELETE"
         }).then(r => {
             if (r.ok) {
-                setItems(items => items.filter(item => item.id !== id))
+                setItems(prev => prev.filter(item => item.id !== deleteItem.id))
+                setOrders(prev => prev.map(order => order.id === deleteItem.order_id ? {...order, items: {...items.filter(item => item.id !== deleteItem.id)}} : order))
+            } else {
+                console.error("Failed to delete item:", r.status)
             }
         })
     }

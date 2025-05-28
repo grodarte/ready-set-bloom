@@ -5,7 +5,7 @@ function StatusModal({ setShowStatusModal, onMarkStatus }) {
     return (
         <div className="modal-backdrop">
             <div className="modal-content">
-                <h3 className="modal-heading">Mark items as...</h3>
+                <h3 className="modal-heading">{`Mark item(s) as...`}</h3>
                 <div className="modal-buttons">
                     <button onClick={() => onMarkStatus('prepped')}>Prepped</button>
                     <button onClick={() => onMarkStatus('completed')}>Completed</button>

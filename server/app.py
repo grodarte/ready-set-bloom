@@ -143,6 +143,15 @@ class ItemByID(Resource):
 
         return item.to_dict(), 200
 
+    def delete(self, id):
+        item = Item.query.filter_by(id=id).first()
+        if item:
+            db.session.delete(item)
+            db.session.commit()
+
+            return "", 204
+        return {"error": "Item not found"}, 404
+
 class OrderByID(Resource):
 
     def get(self, id):

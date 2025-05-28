@@ -50,7 +50,8 @@ function ItemPanel({ item, onUpdateItem, onDeleteItem }) {
                         <div className="modal-buttons">
                             <button 
                                 style={{ color: "red" }} 
-                                onClick={() => {onDeleteItem(id)
+                                onClick={() => {
+                                    onDeleteItem(item)
                                     setShowDeleteModal(false)}}
                             >
                                 DELETE
