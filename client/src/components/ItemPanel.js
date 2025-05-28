@@ -8,12 +8,11 @@ import { AccentContext } from "../context/accent"
 import { ItemContext } from "../context/item"
 import "../styles/itempanel.css"
 
-function ItemPanel({ item, onDeleteItem }) {
+function ItemPanel({ item, onUpdateItem, onDeleteItem }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false)
     const { wristlets } = useContext(WristletContext)
     const { flowers } = useContext(FlowerContext)
     const { accents } = useContext(AccentContext)
-    const { items, setItems } = useContext(ItemContext)
     const { id, item_type, item_status, ribbon_color, special_requests, wristlet, flower, accent } = item
     const { isEditing, editData, startEditing, cancelEditing, handleChange } = useInlineEdit({
         wristlet_id: wristlet?.id || null,
@@ -24,7 +23,21 @@ function ItemPanel({ item, onDeleteItem }) {
     })
 
     function handleSaveItem() {
-        // patch logic for items
+        const updatedItem = {
+            id: id,
+            wristlet_id: editData.wristlet_id,
+            flower_id: editData.flower_id,
+            accent_id: editData.accent_id,
+            ribbon_color: editData.ribbon_color,
+            special_requests: editData.special_requests
+        }
+
+        onUpdateItem(updatedItem)
+        cancelEditing()
+    }
+
+    function handleMarkItemStatus() {
+
     }
 
     return (
@@ -116,13 +129,11 @@ function ItemPanel({ item, onDeleteItem }) {
                     </tbody>
                 </table>
                 <div className="item-panel-footer">
-                    {isEditing ? (
+                    {isEditing && (
                         <>
                             <button className="save-button" onClick={handleSaveItem}>Save</button>
                             <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
-                    ) : (
-                        <button className="edit-button" onClick={startEditing}>Edit Item</button>
                     )}
                 </div>
         </div>

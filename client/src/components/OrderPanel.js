@@ -58,7 +58,7 @@ function OrderPanel() {
         })
     }
 
-    function handleSaveOrder() {
+    function handleUpdateOrder() {
         const cleanedPhone = editData.phone.replace(/\D/g, "")
 
         const updatedOrder = {
@@ -100,6 +100,25 @@ function OrderPanel() {
         })
     }
 
+    function handleUpdateItem(updatedItem) {
+        fetch(`/api/items/${updatedItem.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedItem)
+        })
+        .then(r => {
+            if (!r.ok) throw new Error("Failed to update item")
+            return r.json()
+        })
+        .then(updatedItem => {
+            const formattedItem = formatItem(updatedItem)
+            setItems(prev => prev.map(item => item.id === updatedItem.id ? formattedItem : item))
+            setOrders(prev => prev.map(order => order.id === updatedItem.order_id ? {...order, items: {...items, formattedItem}} : order))
+        })
+    }
+
     function handleDeleteItem(id) {
         fetch(`api/items/${id}`, {
             method: "DELETE"
@@ -110,7 +129,7 @@ function OrderPanel() {
         })
     }
 
-    const itemElements = filteredItems.map(item => <ItemPanel key={item.id} item={item} onDeleteItem={handleDeleteItem}/>)
+    const itemElements = filteredItems.map(item => <ItemPanel key={item.id} item={item} onUpdateItem={handleUpdateItem} onDeleteItem={handleDeleteItem}/>)
     
     return (
         <div className="order-panel">
@@ -190,7 +209,7 @@ function OrderPanel() {
                 <div className="order-panel-footer">
                     {isEditing ? (
                         <>
-                            <button className="save-button" onClick={handleSaveOrder}>Save</button>
+                            <button className="save-button" onClick={handleUpdateOrder}>Save</button>
                             <button className="cancel-button" onClick={cancelEditing}>Cancel</button>
                         </>
                     ) : (
