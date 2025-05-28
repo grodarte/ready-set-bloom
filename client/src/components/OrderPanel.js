@@ -26,7 +26,7 @@ function OrderPanel() {
         delivery_details: delivery_details,
     })
     
-    function handleMarkStatus(status) {
+    function handleMarkOrderStatus(status) {
         setShowStatusModal(false)
         filteredItems.forEach(item => {
             fetch(`/api/items/${item.id}`, {
@@ -201,7 +201,7 @@ function OrderPanel() {
                 {itemElements}
                 <button onClick={()=>setShowDeleteModal(true)}>DELETE ORDER</button>
             </div>
-            {showStatusModal && <StatusModal onMarkStatus={handleMarkStatus} setShowStatusModal={setShowStatusModal}/>}
+            {showStatusModal && <StatusModal onMarkStatus={handleMarkOrderStatus} setShowStatusModal={setShowStatusModal}/>}
         </div>
     )
 }

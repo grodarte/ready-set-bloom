@@ -27,15 +27,6 @@ function ItemPanel({ item, onDeleteItem }) {
         // patch logic for items
     }
 
-    function handleDeleteItem() {
-        //delete logic for items
-    }
-
-    function handleMarkItemStatus() {
-
-    }
-
-
     return (
         <div className="item-panel">
             {showDeleteModal && (
